@@ -54,17 +54,19 @@ public class PositionController : MonoBehaviour
         }
 
         // DebugOculus.Instance.Log(pointList.Count.ToString());
-        if(pointList.Count == 2 && pointSetter){
+        if (pointList.Count == 3 && pointSetter)
+        {
             // Create Table
             pointSetter = false;
             GameObject pointA = pointList[0];
             GameObject pointB = pointList[1];
+            GameObject pointC = pointList[2];
             // Calculate rectangle
-            CreateRectangle(pointA, pointB);
-        } 
+            CreateRectangle(pointA, pointB, pointC);
+        }
 
 
-        
+
         // if (OVRInput.GetDown(OVRInput.PrimaryHandTrigger))
         // {
         //     gameObject.transform.position = leftController.transform.position;
@@ -72,13 +74,14 @@ public class PositionController : MonoBehaviour
         // }
     }
 
-    void CreateRectangle(GameObject posA, GameObject posB){
+    void CreateRectangle(GameObject posA, GameObject posB, GameObject posC)
+    {
         float xCenter = (posA.transform.localPosition.x + posB.transform.localPosition.x)/2;
         float yCenter = (posA.transform.localPosition.y + posB.transform.localPosition.y)/2;
-        float zCenter = (posA.transform.localPosition.z - posB.transform.localPosition.z)/2;
+        float zCenter = (posB.transform.localPosition.z - posC.transform.localPosition.z)/2;
         float xScale = Mathf.Abs(posA.transform.localPosition.x - posB.transform.localPosition.x);
-        float zScale = Mathf.Abs(posA.transform.localPosition.z - posB.transform.localPosition.z);
-        Vector3 planeScale = new Vector3(xScale, 1, zScale);
+        float zScale = Mathf.Abs(posB.transform.localPosition.z - posC.transform.localPosition.z);
+        Vector3 planeScale = new Vector3(xScale, 0.01f, zScale);
         Vector3 planePos = new Vector3(xCenter, yCenter, zCenter);
         tp = Instantiate(tablePlane, planePos, Quaternion.identity);
         tp.transform.localScale = planeScale;
