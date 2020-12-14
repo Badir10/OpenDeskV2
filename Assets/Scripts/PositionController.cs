@@ -78,7 +78,7 @@ public class PositionController : MonoBehaviour
         float zCenter = (posA.transform.localPosition.z - posB.transform.localPosition.z)/2;
         float xScale = Mathf.Abs(posA.transform.localPosition.x - posB.transform.localPosition.x);
         float zScale = Mathf.Abs(posA.transform.localPosition.z - posB.transform.localPosition.z);
-        Vector3 planeScale = new Vector3(xScale, 1, zScale);
+        Vector3 planeScale = new Vector3(xScale, 0.01f, zScale);
         Vector3 planePos = new Vector3(xCenter, yCenter, zCenter);
         tp = Instantiate(tablePlane, planePos, Quaternion.identity);
         tp.transform.localScale = planeScale;
