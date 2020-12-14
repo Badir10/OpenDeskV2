@@ -65,7 +65,7 @@ public class PositionController : MonoBehaviour
         } 
 
 
-        
+
         // if (OVRInput.GetDown(OVRInput.PrimaryHandTrigger))
         // {
         //     gameObject.transform.position = leftController.transform.position;
