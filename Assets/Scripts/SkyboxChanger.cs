@@ -19,13 +19,24 @@ public class SkyboxChanger : MonoBehaviour
         
     }
 
-    public void ChangingSkybox()
+    public void SkyboxUp()
     {
         if (i == skyBox.Length)
         {
             i = 0;
         }
         i++;
+        RenderSettings.skybox = skyBox[i];
+        Debug.Log("Skybox nummer " + i);
+    }
+
+    public void SkyboxDown()
+    {
+        if (i == skyBox.Length)
+        {
+            i = 0;
+        }
+        i--;
         RenderSettings.skybox = skyBox[i];
         Debug.Log("Skybox nummer " + i);
     }
