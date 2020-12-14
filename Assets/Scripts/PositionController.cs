@@ -99,9 +99,10 @@ public class PositionController : MonoBehaviour
         float lengthv1 = Vector3.Magnitude(v1);
         float lengthu0 = Vector3.Magnitude(u0);
         float phi = Mathf.Acos(scalar/(lengthu0*lengthv0));
-
-        tp = Instantiate(tablePlane, center, Quaternion.Euler(0,phi,0));
-        tp.transform.localScale = new Vector3(lengthv0/2, 0.01f, lengthv1/2);
+        float alpha = 180- (phi * 180 / Mathf.PI);
+        Debug.Log(alpha + " " + v0.x + " " + v0.y + " " + v0.z);
+        tp = Instantiate(tablePlane, center, Quaternion.Euler(0, alpha, 0));
+        tp.transform.localScale = new Vector3(lengthv0, 0.01f, lengthv1);
 
         // float xCenter = (posA.transform.localPosition.x + posB.transform.localPosition.x)/2;
         // float yCenter = (posA.transform.localPosition.y + posB.transform.localPosition.y)/2;
