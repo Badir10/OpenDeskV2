@@ -21,8 +21,9 @@ public class ScreenController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
+        /*
         if (OVRInput.GetDown(OVRInput.Button.Two))
         {
             overlayKeyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
@@ -32,10 +33,13 @@ public class ScreenController : MonoBehaviour
         {
             inputText = overlayKeyboard.text;
             screenText.text = inputText;
-        }
+        }*/
 
         //isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
         //ringFingerPinchStrength = hand.GetFingerPinchStrength(OVRHand.HandFinger.Ring);
+
+        screenText.text = screenText.text + inputText;
+        inputText = "";
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,5 +50,8 @@ public class ScreenController : MonoBehaviour
     {
         Debug.Log("Exit");
     }
-
+    public static void PrintKey(char key)
+    {
+        inputText = inputText + key;
+    }
 }
