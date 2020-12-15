@@ -30,20 +30,20 @@ public class PositionController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (OVRInput.GetDown(OVRInput.Button.SecondaryHandTrigger)  && pointSetter)
+        if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger)  && pointSetter)
         {
             // DebugOculus.Instance.Log(rightController.transform.position.ToString());
             GameObject pp = Instantiate(point, rightController.transform.position, Quaternion.identity);
             pointList.Add(pp);
         }
 
-        if (OVRInput.GetDown(OVRInput.Button.PrimaryHandTrigger) && pointSetter)
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger) && pointSetter)
         {
             GameObject pp = Instantiate(point, leftController.transform.position, Quaternion.identity);
             pointList.Add(pp);
         }
 
-        if (OVRInput.GetDown(OVRInput.Button.One))
+        if (OVRInput.GetDown(OVRInput.Button.Start))
         {
             foreach(GameObject points in pointList){
                 GameObject.Destroy(points);
@@ -92,6 +92,7 @@ public class PositionController : MonoBehaviour
         Vector3 v0 = p0 - p1;
         Vector3 v1 = p2 - p1;
         Vector3 center = p0 + (p2 - p0) / 2;
+        center.y = center.y - 0.03f;
         Vector3 u0 = new Vector3(1,0,0);
 
         float scalar = Vector3.Dot(v0, u0);
@@ -102,7 +103,7 @@ public class PositionController : MonoBehaviour
         float alpha = 180- (phi * 180 / Mathf.PI);
         Debug.Log(alpha + " " + v0.x + " " + v0.y + " " + v0.z);
         tp = Instantiate(tablePlane, center, Quaternion.Euler(0, alpha, 0));
-        tp.transform.localScale = new Vector3(lengthv0, 0.01f, lengthv1);
+        tp.transform.GetChild(0).transform.localScale = new Vector3(lengthv0, 0.03f, lengthv1);
 
         // float xCenter = (posA.transform.localPosition.x + posB.transform.localPosition.x)/2;
         // float yCenter = (posA.transform.localPosition.y + posB.transform.localPosition.y)/2;

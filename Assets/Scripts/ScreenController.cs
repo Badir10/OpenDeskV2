@@ -54,4 +54,16 @@ public class ScreenController : MonoBehaviour
     {
         inputText = inputText + key;
     }
+    public void SkyboxUp()
+    {
+        SkyboxChanger.SkyboxUp();
+    }
+    public void SkyboxDown()
+    {
+        SkyboxChanger.SkyboxDown();
+    }
+    public void UmgebungUp()
+    {
+        SkyboxChanger.UmgebungUp();
+    }
 }

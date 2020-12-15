@@ -6,18 +6,22 @@ using UnityEngine;
 
 public class SkyboxChanger : MonoBehaviour
 {
-    public Material[] skyBox;
-    public GameObject[] umgebung;
+    public static Material[] skyBox;
+    public static GameObject[] umgebung;
+    public Material[] skyBoxP;
+    public GameObject[] umgebungP;
 
-    private int i = 0;
-    private int j = 1;
+    private static int i = 0;
+    private static int j = 1;
 
-    private float timePassed = 0;
-    private bool pause = false;
+    private static float timePassed = 0;
+    private static bool pause = false;
     public float maxTime;
 
     void Start()
     {
+        skyBox = skyBoxP;
+        umgebung = umgebungP;
         RenderSettings.skybox = skyBox[0];
         umgebung[0].SetActive(true);
     }
@@ -35,7 +39,7 @@ public class SkyboxChanger : MonoBehaviour
         }
     }
 
-    public void SkyboxUp()
+    public static void SkyboxUp()
     {
         if (!pause)
         {
@@ -50,7 +54,7 @@ public class SkyboxChanger : MonoBehaviour
         }
     }
 
-    public void SkyboxDown()
+    public static void SkyboxDown()
     {
         if (!pause)
         {
@@ -65,7 +69,7 @@ public class SkyboxChanger : MonoBehaviour
         }
     }
 
-    public void UmgebungUp()
+    public static void UmgebungUp()
     {
         if (!pause)
         {
