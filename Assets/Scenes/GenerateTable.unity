@@ -583,7 +583,7 @@ MonoBehaviour:
   rightController: {fileID: 1550904989}
   leftController: {fileID: 1620111706}
   point: {fileID: 2845577582819695252, guid: 8ce5f2d6fec1f3149ab9abfac16fb3f9, type: 3}
-  tablePlane: {fileID: 5792876867914998429, guid: 78e8a2cfa9a9a8c448b61769d30590db, type: 3}
+  tablePlane: {fileID: 8205820988896707037, guid: 7769552debf6daa46bfef16b1890c8bd, type: 3}
 --- !u!1001 &1550904988
 PrefabInstance:
   m_ObjectHideFlags: 0
