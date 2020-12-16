@@ -151,5 +151,26 @@ public class PositionController : MonoBehaviour
             }
         }
         tp.transform.GetChild(0).transform.localScale = new Vector3(lengthv0, 0.03f, lengthv1);
+
+        GameObject scaledTable = tp.transform.GetChild(0).gameObject;
+        float legScaleY = tp.transform.localPosition.y;
+        float legScaleXZ = 0.05f;
+        Vector3 topRight = new Vector3(scaledTable.transform.localScale.x - legScaleXZ, -(tp.transform.position.y), scaledTable.transform.localScale.z - legScaleXZ) / 2;
+        Vector3 topLeft = new Vector3(-(scaledTable.transform.localScale.x) + legScaleXZ, -(tp.transform.position.y), scaledTable.transform.localScale.z - legScaleXZ) / 2;
+        Vector3 downRight = new Vector3(scaledTable.transform.localScale.x - legScaleXZ, -(tp.transform.position.y), -(scaledTable.transform.localScale.z) + legScaleXZ) / 2;
+        Vector3 downLeft = new Vector3(-(scaledTable.transform.localScale.x) + legScaleXZ, -(tp.transform.position.y), -(scaledTable.transform.localScale.z) + legScaleXZ) / 2;
+        Vector3[] legPosition = new[] {topRight, topLeft, downRight, downLeft};
+        MeshRenderer scaledTableMesh = scaledTable.GetComponent<MeshRenderer>();
+
+        foreach(Vector3 legpos in legPosition){
+            GameObject leg = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            leg.transform.localEulerAngles = tp.transform.localEulerAngles;
+            leg.transform.position = tp.transform.position;
+            leg.transform.localScale = new Vector3(legScaleXZ, legScaleY, legScaleXZ);
+            leg.transform.SetParent(tp.transform);
+            leg.transform.localPosition = legpos;
+            MeshRenderer legMesh = leg.GetComponent<MeshRenderer>();
+            legMesh.material = scaledTableMesh.material;
+        }
     }
 }
