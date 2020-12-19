@@ -415,6 +415,7 @@ GameObject:
   - component: {fileID: 8980547742239456082}
   - component: {fileID: 8980547742239456083}
   - component: {fileID: 8980547742239456084}
+  - component: {fileID: 1566621259611828446}
   m_Layer: 0
   m_Name: UmgebungUp
   m_TagString: Untagged
@@ -430,8 +431,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8980547742239456086}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.030100001, y: 0.6, z: -0.010800034}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children:
   - {fileID: 8980547741521073795}
   - {fileID: 8980547743532915911}
@@ -539,8 +540,8 @@ MonoBehaviour:
   proximityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SkyboxChanger, Assembly-CSharp
+      - m_Target: {fileID: 1566621259611828446}
+        m_TargetAssemblyTypeName: ButtonInstantiatedController, Assembly-CSharp
         m_MethodName: UmgebungUp
         m_Mode: 1
         m_Arguments:
@@ -553,37 +554,27 @@ MonoBehaviour:
         m_CallState: 2
   contactEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8980547742239456081}
-        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-        m_MethodName: set_material
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: cb3eaeae889e82a468f10f0b1b3d5d4b, type: 2}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   actionEvent:
     m_PersistentCalls:
       m_Calls: []
   defaultEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8980547742239456081}
-        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-        m_MethodName: set_material
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &1566621259611828446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8980547742239456086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a839956e4b7abc47955ab43bdc910b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpTimer: 0.5
+  _skyboxChanger: {fileID: 0}
 --- !u!1 &8980547742298083978
 GameObject:
   m_ObjectHideFlags: 0

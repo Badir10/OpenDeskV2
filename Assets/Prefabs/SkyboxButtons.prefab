@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4288295386483284029}
   - component: {fileID: 4288295386483284028}
   - component: {fileID: 4288295386483284031}
+  - component: {fileID: 2143370685865670959}
   m_Layer: 0
   m_Name: SkyDown
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4288295386483284025}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.086, y: 0.6, z: -0.010800034}
+  m_LocalPosition: {x: -0.086, y: 0, z: 0}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children:
   - {fileID: 4288295387883543652}
@@ -65,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
+  - {fileID: 2100000, guid: b7f1995c52f1c58469bc0b2dfdced795, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -138,51 +139,43 @@ MonoBehaviour:
   proximityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SkyboxChanger, Assembly-CSharp
+      - m_Target: {fileID: 2143370685865670959}
+        m_TargetAssemblyTypeName: ButtonInstantiatedController, Assembly-CSharp
         m_MethodName: SkyboxDown
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 0.5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   contactEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4288295386483284018}
-        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-        m_MethodName: set_material
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: cb3eaeae889e82a468f10f0b1b3d5d4b, type: 2}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   actionEvent:
     m_PersistentCalls:
       m_Calls: []
   defaultEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4288295386483284018}
-        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-        m_MethodName: set_material
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &2143370685865670959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288295386483284025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a839956e4b7abc47955ab43bdc910b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpedColor: {r: 0, g: 0, b: 0, a: 0}
+  lerpTimer: 0.5
+  _skyboxChanger: {fileID: 0}
+  rend: {fileID: 0}
 --- !u!1 &4288295386847138073
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,6 +190,7 @@ GameObject:
   - component: {fileID: 4288295386847138078}
   - component: {fileID: 4288295386847138067}
   - component: {fileID: 4288295386847138066}
+  - component: {fileID: 9188261145230245098}
   m_Layer: 0
   m_Name: SkyUp
   m_TagString: Untagged
@@ -212,7 +206,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4288295386847138073}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0159, y: 0.6, z: -0.010800034}
+  m_LocalPosition: {x: -0.0159, y: 0, z: 0}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children:
   - {fileID: 4288295387167795213}
@@ -248,7 +242,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
+  - {fileID: 2100000, guid: b7f1995c52f1c58469bc0b2dfdced795, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -321,8 +315,26 @@ MonoBehaviour:
   proximityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SkyboxChanger, Assembly-CSharp
+      - m_Target: {fileID: 9188261145230245098}
+        m_TargetAssemblyTypeName: ButtonInstantiatedController, Assembly-CSharp
+        m_MethodName: ColorLerpOn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.5
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  contactEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  actionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9188261145230245098}
+        m_TargetAssemblyTypeName: ButtonInstantiatedController, Assembly-CSharp
         m_MethodName: SkyboxUp
         m_Mode: 1
         m_Arguments:
@@ -333,24 +345,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  contactEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4288295386847138079}
-        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-        m_MethodName: set_material
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: cb3eaeae889e82a468f10f0b1b3d5d4b, type: 2}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  actionEvent:
-    m_PersistentCalls:
-      m_Calls: []
   defaultEvent:
     m_PersistentCalls:
       m_Calls:
@@ -366,6 +360,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &9188261145230245098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288295386847138073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a839956e4b7abc47955ab43bdc910b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpedColor: {r: 0, g: 0, b: 0, a: 0}
+  lerpTimer: 1
+  _skyboxChanger: {fileID: 0}
+  rend: {fileID: 0}
 --- !u!1 &4288295387120825059
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,8 +404,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4288295387120825059}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.37, z: 0}
-  m_LocalScale: {x: 1, y: 0.242092, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4288295386847138077}
   m_RootOrder: 2
@@ -504,7 +514,7 @@ Transform:
   m_GameObject: {fileID: 4288295387167795212}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_Children: []
   m_Father: {fileID: 4288295386847138077}
   m_RootOrder: 0
@@ -863,7 +873,7 @@ Transform:
   m_GameObject: {fileID: 4288295387883543655}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_Children: []
   m_Father: {fileID: 4288295386483284030}
   m_RootOrder: 0

@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class SkyboxChanger : MonoBehaviour
 {
+    //Static wieder rueckgaengig machen
     public static Material[] skyBox;
     public static GameObject[] umgebung;
     public Material[] skyBoxP;
@@ -39,7 +40,7 @@ public class SkyboxChanger : MonoBehaviour
         }
     }
 
-    public static void SkyboxUp()
+    public void SkyboxUp()
     {
         if (!pause)
         {
@@ -48,20 +49,21 @@ public class SkyboxChanger : MonoBehaviour
             {
                 i = 0;
             }
+            
             i++;
             RenderSettings.skybox = skyBox[i];
             Debug.Log("Skybox nummer " + i); 
         }
     }
 
-    public static void SkyboxDown()
+    public void SkyboxDown()
     {
         if (!pause)
         {
             pause = true;
-            if (i == skyBox.Length)
+            if (i < 0)
             {
-                i = 0;
+                i = skyBox.Length;
             }
             i--;
             RenderSettings.skybox = skyBox[i];
@@ -69,7 +71,7 @@ public class SkyboxChanger : MonoBehaviour
         }
     }
 
-    public static void UmgebungUp()
+    public void UmgebungUp()
     {
         if (!pause)
         {

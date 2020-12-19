@@ -7,10 +7,10 @@ using UnityEngine.Events;
 public class ButtonListener : MonoBehaviour
 {
     public UnityEvent proximityEvent;
-    public UnityEvent contactEvent;
-    public UnityEvent actionEvent;
+    //public UnityEvent contactEvent;
+    //public UnityEvent actionEvent;
     public UnityEvent defaultEvent;
-    // Start is called before the first frame update
+
     void Start()
     {
         GetComponent<ButtonController>().InteractableStateChanged.AddListener(InitiateEvent);
@@ -22,23 +22,17 @@ public class ButtonListener : MonoBehaviour
         {
             proximityEvent.Invoke();
         }
-        else if (state.NewInteractableState == InteractableState.ContactState)
+/*        else if (state.NewInteractableState == InteractableState.ContactState)
         {
             contactEvent.Invoke();
         }
         else if (state.NewInteractableState == InteractableState.ActionState)
         {
-            contactEvent.Invoke();
-        }
+            actionEvent.Invoke();
+        }  */
         else 
         {
             defaultEvent.Invoke();
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
