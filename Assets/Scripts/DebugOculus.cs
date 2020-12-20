@@ -8,6 +8,7 @@ public class DebugOculus : MonoBehaviour
     public static DebugOculus Instance;
     bool inMenu;
     Text logText;
+    
 
     void Awake(){
         Instance = this;
@@ -20,7 +21,7 @@ public class DebugOculus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(OVRInput.GetDown(OVRInput.Button.Two) || OVRInput.GetDown(OVRInput.Button.Start))
+        if(OVRInput.GetDown(OVRInput.Button.Two))
         {
             if(inMenu) DebugUIBuilder.instance.Hide();
             else DebugUIBuilder.instance.Show();
