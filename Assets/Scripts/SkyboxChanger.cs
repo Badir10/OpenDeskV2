@@ -6,81 +6,54 @@ using UnityEngine;
 
 public class SkyboxChanger : MonoBehaviour
 {
-    public static Material[] skyBox;
-    public static GameObject[] umgebung;
-    public Material[] skyBoxP;
-    public GameObject[] umgebungP;
+    public Material[] skyBox;
+    public GameObject[] surrounding;
 
-    private static int i = 0;
-    private static int j = 1;
-
-    private static float timePassed = 0;
-    private static bool pause = false;
-    public float maxTime;
-
+    private int currentSkybox;
+    private int currentUmgebung;
+    
     void Start()
     {
-        skyBox = skyBoxP;
-        umgebung = umgebungP;
-        RenderSettings.skybox = skyBox[0];
-        umgebung[0].SetActive(true);
+        currentSkybox = 0;
+        currentUmgebung = 0;
+        
+        RenderSettings.skybox = skyBox[currentSkybox];
+        surrounding[currentUmgebung].SetActive(true);
     }
 
-    private void Update()
+
+
+    public void SkyboxUp()
     {
-        if (pause)
+        if (currentSkybox == skyBox.Length)
         {
-            timePassed = timePassed + Time.deltaTime;
-            if (timePassed >= maxTime)
-            {
-                timePassed = 0;
-                pause = false;
-            }
+            currentSkybox = 0;
         }
+            
+        currentSkybox++;
+        RenderSettings.skybox = skyBox[currentSkybox];
     }
 
-    public static void SkyboxUp()
+    public void SkyboxDown()
     {
-        if (!pause)
+        if (currentSkybox == 0)
         {
-            pause = true;
-            if (i == skyBox.Length)
-            {
-                i = 0;
-            }
-            i++;
-            RenderSettings.skybox = skyBox[i];
-            Debug.Log("Skybox nummer " + i); 
+            currentSkybox = skyBox.Length;
         }
+        currentSkybox--;
+        RenderSettings.skybox = skyBox[currentSkybox];
     }
 
-    public static void SkyboxDown()
+    public void UmgebungUp()
     {
-        if (!pause)
+        if (currentUmgebung == surrounding.Length)
         {
-            pause = true;
-            if (i == skyBox.Length)
-            {
-                i = 0;
-            }
-            i--;
-            RenderSettings.skybox = skyBox[i];
-            Debug.Log("Skybox nummer " + i);
+            currentUmgebung = 0;
         }
+        surrounding[currentUmgebung].SetActive(false);
+        currentUmgebung++;
+        surrounding[currentUmgebung].SetActive(true);
     }
-
-    public static void UmgebungUp()
-    {
-        if (!pause)
-        {
-            pause = true;
-            if (j == umgebung.Length)
-            {
-                j = 0;
-            }
-            umgebung[j].SetActive(false);
-            j++;
-            umgebung[j].SetActive(true);
-        }
-    }
+    
+    
 }
