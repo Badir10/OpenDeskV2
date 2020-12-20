@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class MusicPlayer : MonoBehaviour
@@ -8,22 +10,28 @@ public class MusicPlayer : MonoBehaviour
     public AudioClip[] audioClips;
     private bool isPlaying;
     private AudioSource _audioSource;
-    private int i;
+    private int currentMusic = 0;
     
-    void Start()
+    void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
     }
-    
-    
+
+    private void Start()
+    {
+        _audioSource.Play();
+        isPlaying = true;
+    }
+
+
     public void MusicPlayPause()
     {
         if (!isPlaying)
         {
-            _audioSource.Play();
+            _audioSource.UnPause();
             isPlaying = true;
         }
-        if (isPlaying)
+        else if (isPlaying)
         {
             _audioSource.Pause();
             isPlaying = false;
@@ -34,13 +42,29 @@ public class MusicPlayer : MonoBehaviour
     {
         if (isPlaying)
         {
-            if (i > audioClips.Length)
+            if (currentMusic == audioClips.Length)
             {
-                i = 0;
+                currentMusic = 0;
             }
 
-            i++;
-            _audioSource.clip = audioClips[i];
+            currentMusic++;
+            _audioSource.clip = audioClips[currentMusic];
+            _audioSource.Play();
+            _audioSource.loop = true;
+        }
+    }
+    
+    public void MusicDown()
+    {
+        if (isPlaying)
+        {
+            if (currentMusic == 0)
+            {
+                currentMusic = audioClips.Length;
+            }
+            
+            currentMusic--;
+            _audioSource.clip = audioClips[currentMusic];
             _audioSource.Play();
             _audioSource.loop = true;
         }

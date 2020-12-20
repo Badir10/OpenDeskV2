@@ -7,41 +7,93 @@ using UnityEngine.PlayerLoop;
 
 public class ButtonInstantiatedController : MonoBehaviour
 {
+    private bool pauseBool;
+    private float timePassed = 0;
+    private float maxTime = 0.5f;
+
     public float lerpTimer = 0.5f;
-    public SkyboxChanger skyboxChanger;
-    public Renderer rend;
+    private SkyboxChanger skyboxChanger;
+    private Renderer rend;
 
-    public MusicPlayer musicPlayer;
+    private MusicPlayer musicPlayer;
 
-    void Start()
+    void Awake()
     {
         skyboxChanger = GameObject.Find("Skybox").GetComponent<SkyboxChanger>();
         rend = gameObject.GetComponent<Renderer>();
-        
         musicPlayer = GameObject.Find("Audio").GetComponent<MusicPlayer>();
     }
-    
+
+    private void Start()
+    {
+        pauseBool = false;
+    }
+
+    private void FixedUpdate()
+    {
+        if (pauseBool)
+        {
+            timePassed = timePassed + Time.deltaTime;
+            if (timePassed >= maxTime)
+            {
+                timePassed = 0;
+                pauseBool = false;
+            }
+        }
+    }
+
     public void SkyboxUp()
     {
-        skyboxChanger.SkyboxUp();
+        if (!pauseBool)
+        {
+            pauseBool = true;
+            skyboxChanger.SkyboxUp();
+        }
     }
+    
     public void SkyboxDown()
     {
-        skyboxChanger.SkyboxDown();
+        if (!pauseBool)
+        {
+            skyboxChanger.SkyboxDown();
+            pauseBool = true;
+        }
     }
+    
     public void UmgebungUp()
     {
-        skyboxChanger.UmgebungUp();
+        if (!pauseBool)
+        {
+            skyboxChanger.UmgebungUp();
+            pauseBool = true;
+        }
     }
 
     public void MusicUp()
     {
-        musicPlayer.MusicUp();
+        if (!pauseBool)
+        {
+            pauseBool = true;
+            musicPlayer.MusicUp();
+        }
+    }
+
+    public void MusicDown()
+    {
+        if (!pauseBool)
+        {
+            pauseBool = true;
+            musicPlayer.MusicDown();
+        }
     }
 
     public void MusicPlayPause()
     {
-        musicPlayer.MusicPlayPause();
+        if (!pauseBool)
+        {
+            pauseBool = true;
+            musicPlayer.MusicPlayPause();
+        }
     }
 
     public void ColorLerpOn()
