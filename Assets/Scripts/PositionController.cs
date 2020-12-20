@@ -5,10 +5,7 @@ using UnityEngine;
 public class PositionController : MonoBehaviour
 {
     public static PositionController Instance;
-    [SerializeField]
-    private GameObject rightController;
-    [SerializeField]
-    private GameObject leftController;
+
     [SerializeField]
     private GameObject point;
     [SerializeField]
@@ -24,7 +21,6 @@ public class PositionController : MonoBehaviour
 
     void Start()
     {
-        Plane test = new Plane();
     }
 
     // Update is called once per frame
@@ -33,13 +29,15 @@ public class PositionController : MonoBehaviour
         if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger)  && pointSetter)
         {
             // DebugOculus.Instance.Log(rightController.transform.position.ToString());
-            GameObject pp = Instantiate(point, rightController.transform.position, Quaternion.identity);
+            Vector3 position = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
+            GameObject pp = Instantiate(point, position, Quaternion.identity);
             pointList.Add(pp);
         }
 
         if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger) && pointSetter)
         {
-            GameObject pp = Instantiate(point, leftController.transform.position, Quaternion.identity);
+            Vector3 position = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
+            GameObject pp = Instantiate(point, position, Quaternion.identity);
             pointList.Add(pp);
         }
 
@@ -62,6 +60,9 @@ public class PositionController : MonoBehaviour
             GameObject pointC = pointList[2];
             // Calculate rectangle
             CreateRectangle(pointA, pointB, pointC);
+            foreach(GameObject point in pointList){
+                GameObject.Destroy(point);
+            }
         } 
 
 
