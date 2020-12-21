@@ -7,6 +7,7 @@ using UnityEngine.PlayerLoop;
 
 public class ButtonInstantiatedController : MonoBehaviour
 {
+    // Hier befinden sich alle Eventhandler die bei der Aktivierung der Buttons verwendet werden
     private bool pauseBool;
     private float timePassed = 0;
     private float maxTime = 0.5f;
@@ -16,6 +17,8 @@ public class ButtonInstantiatedController : MonoBehaviour
     private Renderer rend;
 
     private MusicPlayer musicPlayer;
+
+    public AudioSource buttonSound;
 
     void Awake()
     {
@@ -99,5 +102,10 @@ public class ButtonInstantiatedController : MonoBehaviour
     public void ColorLerpOn()
     {
         rend.material.color = Color.Lerp(Color.white, Color.green, lerpTimer);
+    }
+
+    public void ButtonSound()
+    {
+        buttonSound.Play();
     }
 }
