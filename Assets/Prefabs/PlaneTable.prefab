@@ -140,9 +140,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 698c14d382ad4ec48b7ac4c3d9ccd2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _positionController: {fileID: 0}
+  _buttonAnchors: []
   musicButtons: {fileID: 3290738882718735312}
   skyboxButtons: {fileID: 3437166178892381256}
   surroundingButtons: {fileID: 800767883136219948}
+  musicPos: {x: 0, y: 0, z: 0}
+  anchorPos: {x: 0, y: 0, z: 0}
 --- !u!1001 &5053010788248480981
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -199,10 +203,6 @@ PrefabInstance:
       value: TableContents
       objectReference: {fileID: 0}
     - target: {fileID: 2797292808853046966, guid: 9efd4fb843fe1574ea09b46c4a5c2f18, type: 3}
-      propertyPath: proximityEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2797292808853046966, guid: 9efd4fb843fe1574ea09b46c4a5c2f18, type: 3}
       propertyPath: proximityEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 6975544170734987874}
@@ -242,6 +242,30 @@ PrefabInstance:
       propertyPath: tablePosition
       value: 
       objectReference: {fileID: 3938435124995263852}
+    - target: {fileID: 4420044489986444339, guid: 9efd4fb843fe1574ea09b46c4a5c2f18, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4420044489986444339, guid: 9efd4fb843fe1574ea09b46c4a5c2f18, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4420044489986444339, guid: 9efd4fb843fe1574ea09b46c4a5c2f18, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4420044489986444339, guid: 9efd4fb843fe1574ea09b46c4a5c2f18, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.035
+      objectReference: {fileID: 0}
+    - target: {fileID: 4420044489986444339, guid: 9efd4fb843fe1574ea09b46c4a5c2f18, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.207
+      objectReference: {fileID: 0}
+    - target: {fileID: 4420044489986444339, guid: 9efd4fb843fe1574ea09b46c4a5c2f18, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.013
+      objectReference: {fileID: 0}
     - target: {fileID: 5549279919997402663, guid: 9efd4fb843fe1574ea09b46c4a5c2f18, type: 3}
       propertyPath: proximityEvent.m_PersistentCalls.m_Calls.Array.size
       value: 3
@@ -274,6 +298,10 @@ PrefabInstance:
       propertyPath: buttonSound
       value: 
       objectReference: {fileID: 5078053549124523455}
+    - target: {fileID: 5808498749100807238, guid: 9efd4fb843fe1574ea09b46c4a5c2f18, type: 3}
+      propertyPath: m_Size.z
+      value: 0.016792808
+      objectReference: {fileID: 0}
     - target: {fileID: 7614640186296270299, guid: 9efd4fb843fe1574ea09b46c4a5c2f18, type: 3}
       propertyPath: proximityEvent.m_PersistentCalls.m_Calls.Array.size
       value: 3
