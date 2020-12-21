@@ -121,11 +121,11 @@ GameObject:
   - component: {fileID: 3446411034097352189}
   - component: {fileID: 3446411034097352190}
   - component: {fileID: 3446411034097352191}
+  - component: {fileID: 427974927498290564}
   - component: {fileID: 3446411034097352178}
   - component: {fileID: 3446411034097352179}
-  - component: {fileID: 427974927498290564}
   m_Layer: 0
-  m_Name: SkyUp
+  m_Name: Key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -210,6 +210,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &427974927498290564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3446411034097352184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e6c670e12bbb849898dd14aa1c1098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Keycode: 0
 --- !u!114 &3446411034097352178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,19 +282,6 @@ MonoBehaviour:
   defaultEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &427974927498290564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3446411034097352184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5e6c670e12bbb849898dd14aa1c1098, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Key: 83
 --- !u!1 &3446411034304611565
 GameObject:
   m_ObjectHideFlags: 0

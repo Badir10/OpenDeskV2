@@ -50,8 +50,19 @@ public class ScreenController : MonoBehaviour
     {
         Debug.Log("Exit");
     }
-    public static void PrintKey(char key)
+    public static void PrintKey(KeyCode keycode, bool Shift, bool AltGr)
     {
+        string key;
+        if (Shift)
+        {
+            key = keycode.ToString();
+        }
+        else
+        {
+            key = keycode.ToString().ToLower();
+        }
+            
+
         inputText = inputText + key;
     }
 }

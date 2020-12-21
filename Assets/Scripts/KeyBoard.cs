@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class KeyBoard : MonoBehaviour
 {
-    public char Key;
+    public KeyCode Keycode;
+    private static bool Shift;
 
     private float timePassed = 0;
     private bool pause = false;
     float maxTime = 0.2f;
+
+    private void Start()
+    {
+        Shift = false;
+    }
     private void Update()
     {
         if (pause)
@@ -26,8 +32,11 @@ public class KeyBoard : MonoBehaviour
     {
         if (!pause)
         {
+            if (Keycode == KeyCode.LeftShift || Keycode == KeyCode.RightShift)
+                Shift = !Shift;
+
             pause = true;
-            ScreenController.PrintKey(Key);
+            ScreenController.PrintKey(Keycode, Shift, false);
         }
     }
 }

@@ -5,10 +5,7 @@ using UnityEngine;
 public class PositionController : MonoBehaviour
 {
     public static PositionController Instance;
-    [SerializeField]
-    private GameObject rightController;
-    [SerializeField]
-    private GameObject leftController;
+
     [SerializeField]
     private GameObject point;
     [SerializeField]
@@ -24,26 +21,27 @@ public class PositionController : MonoBehaviour
 
     void Start()
     {
-        Plane test = new Plane();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (OVRInput.GetDown(OVRInput.Button.SecondaryHandTrigger)  && pointSetter)
+        if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger)  && pointSetter)
         {
             // DebugOculus.Instance.Log(rightController.transform.position.ToString());
-            GameObject pp = Instantiate(point, rightController.transform.position, Quaternion.identity);
+            Vector3 position = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
+            GameObject pp = Instantiate(point, position, Quaternion.identity);
             pointList.Add(pp);
         }
 
-        if (OVRInput.GetDown(OVRInput.Button.PrimaryHandTrigger) && pointSetter)
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger) && pointSetter)
         {
-            GameObject pp = Instantiate(point, leftController.transform.position, Quaternion.identity);
+            Vector3 position = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
+            GameObject pp = Instantiate(point, position, Quaternion.identity);
             pointList.Add(pp);
         }
 
-        if (OVRInput.GetDown(OVRInput.Button.One))
+        if (OVRInput.GetDown(OVRInput.Button.Start))
         {
             foreach(GameObject points in pointList){
                 GameObject.Destroy(points);
@@ -62,6 +60,9 @@ public class PositionController : MonoBehaviour
             GameObject pointC = pointList[2];
             // Calculate rectangle
             CreateRectangle(pointA, pointB, pointC);
+            foreach(GameObject point in pointList){
+                GameObject.Destroy(point);
+            }
         } 
 
 
@@ -74,50 +75,103 @@ public class PositionController : MonoBehaviour
     }
 
     void CreateRectangle(GameObject posA, GameObject posB, GameObject posC){
-        // float x0 = posA.transform.localPosition.x; float y0 = posA.transform.localPosition.y; float z0 = posA.transform.localPosition.z;
-        // float x1 = posB.transform.localPosition.x; float y1 = posB.transform.localPosition.y; float z1 = posB.transform.localPosition.z;
-        // float x2 = posC.transform.localPosition.x; float y2 = posC.transform.localPosition.y;  float z2 = posC.transform.localPosition.z;
-
-        // float ux = x1-x0; float uy = y1-y0; float uz = z1-z0;
-        // float vx = x2-x0; float vy = y2-y0; float vz = z2-z0;
-
-        // Vector3 u_cross_v = new Vector3(uy*vz-uz*vy, uz*vx-ux*vz, ux*vy-uy*vx);
-
-
-        // Clockwise
         Vector3 p0 = posA.transform.localPosition;
         Vector3 p1 = posB.transform.localPosition;
         Vector3 p2 = posC.transform.localPosition;
 
         Vector3 v0 = p0 - p1;
+        //v0.y = 0;
         Vector3 v1 = p2 - p1;
+        //v1.y = 0;
         Vector3 center = p0 + (p2 - p0) / 2;
+        center.y = center.y - 0.03f;
         Vector3 u0 = new Vector3(1,0,0);
 
         float scalar = Vector3.Dot(v0, u0);
         float lengthv0 = Vector3.Magnitude(v0);
         float lengthv1 = Vector3.Magnitude(v1);
         float lengthu0 = Vector3.Magnitude(u0);
-        float phi = Mathf.Acos(scalar/(lengthu0*lengthv0));
-        float alpha = 180- (phi * 180 / Mathf.PI);
-        Debug.Log(alpha + " " + v0.x + " " + v0.y + " " + v0.z);
-        tp = Instantiate(tablePlane, center, Quaternion.Euler(0, alpha, 0));
-        tp.transform.localScale = new Vector3(lengthv0, 0.01f, lengthv1);
+        float beta = Mathf.Acos(scalar/(lengthu0*lengthv0));
+        beta = beta * 180 / Mathf.PI;
+        float alpha = 180- beta;
+        Debug.LogError("Winkel a: " + alpha + "; Winkel b: " + beta + "; Vector V0: " + v0.x + ", " + v0.y + ", " + v0.z + "; Scalar: " + scalar);
+        float minAngle;
+        float maxAngle;
+        if (scalar >= 0)
+        {
+            minAngle = beta;
+            maxAngle = alpha;
+            if (v0.z >= 0)
+            {
+                if (v1.x >= 0)
+                {
+                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, maxAngle, 0));
+                }
+                else
+                {
+                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, -minAngle, 0));
+                }
+            }
+            else
+            {
+                if (v1.x >= 0)
+                {
+                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, minAngle, 0));
+                }
+                else
+                {
+                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, -maxAngle, 0));
+                }
+            }
+        }
+        else
+        {
+            minAngle = alpha;
+            maxAngle = beta;
+            if (v0.z >= 0)
+            {
+                if (v1.x >= 0)
+                {
+                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, minAngle, 0));
+                }
+                else
+                {
+                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, -maxAngle, 0));
+                }
+            }
+            else
+            {
+                if (v1.x >= 0)
+                {
+                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, maxAngle, 0));
+                }
+                else
+                {
+                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, -minAngle, 0));
+                }
+            }
+        }
+        tp.transform.GetChild(0).transform.localScale = new Vector3(lengthv0, 0.03f, lengthv1);
 
-        // float xCenter = (posA.transform.localPosition.x + posB.transform.localPosition.x)/2;
-        // float yCenter = (posA.transform.localPosition.y + posB.transform.localPosition.y)/2;
-        // float zCenter = (posA.transform.localPosition.z - posB.transform.localPosition.z)/2;
-        // float xScale = Mathf.Abs(posA.transform.localPosition.x - posB.transform.localPosition.x);
-        // float zScale = Mathf.Abs(posA.transform.localPosition.z - posB.transform.localPosition.z);
-        // Vector3 planeScale = new Vector3(xScale, 1, zScale);
-        // Vector3 planePos = new Vector3(xCenter, yCenter, zCenter);
-        // tp = Instantiate(tablePlane, planePos, Quaternion.identity);
-        // tp.transform.localScale = planeScale;
-        // DebugOculus.Instance.Log(tp.transform.localScale.ToString());
+        GameObject scaledTable = tp.transform.GetChild(0).gameObject;
+        float legScaleY = tp.transform.localPosition.y;
+        float legScaleXZ = 0.05f;
+        Vector3 topRight = new Vector3(scaledTable.transform.localScale.x - legScaleXZ, -(tp.transform.position.y), scaledTable.transform.localScale.z - legScaleXZ) / 2;
+        Vector3 topLeft = new Vector3(-(scaledTable.transform.localScale.x) + legScaleXZ, -(tp.transform.position.y), scaledTable.transform.localScale.z - legScaleXZ) / 2;
+        Vector3 downRight = new Vector3(scaledTable.transform.localScale.x - legScaleXZ, -(tp.transform.position.y), -(scaledTable.transform.localScale.z) + legScaleXZ) / 2;
+        Vector3 downLeft = new Vector3(-(scaledTable.transform.localScale.x) + legScaleXZ, -(tp.transform.position.y), -(scaledTable.transform.localScale.z) + legScaleXZ) / 2;
+        Vector3[] legPosition = new[] {topRight, topLeft, downRight, downLeft};
+        MeshRenderer scaledTableMesh = scaledTable.GetComponent<MeshRenderer>();
 
-        // Plane plane = new Plane();
-        // plane.Set3Points(posA.transform.localPosition, posB.transform.localPosition, posC.transform.localPosition);
-        // Vector3 planeNormal = plane.normal;
-        // DebugOculus.Instance.Log("X: " + plane.normal.x.ToString() + " Y: " + plane.normal.y.ToString() + " Z: " + plane.normal.z.ToString());
+        foreach(Vector3 legpos in legPosition){
+            GameObject leg = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            leg.transform.localEulerAngles = tp.transform.localEulerAngles;
+            leg.transform.position = tp.transform.position;
+            leg.transform.localScale = new Vector3(legScaleXZ, legScaleY, legScaleXZ);
+            leg.transform.SetParent(tp.transform);
+            leg.transform.localPosition = legpos;
+            MeshRenderer legMesh = leg.GetComponent<MeshRenderer>();
+            legMesh.material = scaledTableMesh.material;
+        }
     }
 }
