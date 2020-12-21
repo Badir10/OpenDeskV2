@@ -38,6 +38,7 @@ public class ScreenController : MonoBehaviour
 
         //isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
         //ringFingerPinchStrength = hand.GetFingerPinchStrength(OVRHand.HandFinger.Ring);
+        screenText.text = screenText.text.Remove(screenText.text.Length - 1);
         if (deleteKey)
         {
             if(screenText.text.Length > 0)
@@ -46,7 +47,7 @@ public class ScreenController : MonoBehaviour
                 deleteKey = false;
             }
         }
-        screenText.text = screenText.text + inputText;
+        screenText.text = screenText.text + inputText + "|";
         inputText = "";
     }
 

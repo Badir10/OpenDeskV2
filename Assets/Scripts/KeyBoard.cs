@@ -33,7 +33,7 @@ public class KeyBoard : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.name + "; " + other.tag);
-        if (other.name.Equals("Hand_Index2_CapsuleCollider") || other.name.Equals("Hand_Index3_CapsuleCollider"))
+        if (other.name.Equals("TargetTransform"))
         {
             if (Keycode1.Equals("Shift")){
                 shift = !shift;
@@ -53,6 +53,9 @@ public class KeyBoard : MonoBehaviour
                     if (Keycode1.Equals("Del"))
                     {
                         ScreenController.DeleteKey();
+                    }else if (Keycode1.Equals("Enter"))
+                    {
+                        ScreenController.PrintKey("\n");
                     }
                     else if (altGr)
                     {
@@ -82,7 +85,7 @@ public class KeyBoard : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.name.Equals("Hand_Index2_CapsuleCollider") || other.name.Equals("Hand_Index3_CapsuleCollider"))
+        if (other.name.Equals("TargetTransform"))
         {
             pressed = false;
             if (Keycode1.Equals("Shift"))
