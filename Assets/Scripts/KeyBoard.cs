@@ -1,42 +1,116 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class KeyBoard : MonoBehaviour
 {
-    public KeyCode Keycode;
-    private static bool Shift;
+    public string Keycode1;
+    public string Keycode2;
+    public string Keycode3;
+    private static bool shift;
+    private static bool altGr;
+    public TMP_Text text1;
+    public TMP_Text text2;
+    public TMP_Text text3;
 
-    private float timePassed = 0;
-    private bool pause = false;
-    float maxTime = 0.2f;
-
+    bool pause;
+    private bool pressed = false;
+    Renderer rend;
     private void Start()
     {
-        Shift = false;
+
+        shift = false;
+        rend = gameObject.transform.GetChild(0).gameObject.GetComponent<Renderer>();
+        text1.text = Keycode1;
+        text2.text = Keycode2;
+        text3.text = Keycode3;
     }
     private void Update()
     {
-        if (pause)
+        
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.name + "; " + other.tag);
+        if (other.name.Equals("Hand_Index2_CapsuleCollider") || other.name.Equals("Hand_Index3_CapsuleCollider"))
         {
-            timePassed = timePassed + Time.deltaTime;
-            if (timePassed >= maxTime)
+            if (Keycode1.Equals("Shift")){
+                shift = !shift;
+                rend.material.color = Color.gray;
+            }else if (Keycode1.Equals("alt gr"))
             {
-                timePassed = 0;
-                pause = false;
+                altGr = !altGr;
+                rend.material.color = Color.gray;
+            }
+            else
+            {
+                if (!pressed)
+                {
+                    rend.material.color = Color.gray;
+
+                    pressed = true;
+                    if (Keycode1.Equals("Del"))
+                    {
+                        ScreenController.DeleteKey();
+                    }
+                    else if (altGr)
+                    {
+                        if(Keycode3.Length > 0)
+                        {
+                            ScreenController.PrintKey(Keycode3);
+                        }                        
+                    }
+                    else if (shift)
+                    {
+                        if (Keycode2.Length > 0)
+                        {
+                            ScreenController.PrintKey(Keycode2);
+                        }
+                        else
+                        {
+                            ScreenController.PrintKey(Keycode1);
+                        }
+                    }
+                    else
+                    {
+                        ScreenController.PrintKey(Keycode1.ToLower());
+                    }
+                }
             }
         }
     }
-
-    public void PrintKey()
+    private void OnTriggerExit(Collider other)
     {
-        if (!pause)
+        if (other.name.Equals("Hand_Index2_CapsuleCollider") || other.name.Equals("Hand_Index3_CapsuleCollider"))
         {
-            if (Keycode == KeyCode.LeftShift || Keycode == KeyCode.RightShift)
-                Shift = !Shift;
-
-            pause = true;
-            ScreenController.PrintKey(Keycode, Shift, false);
+            pressed = false;
+            if (Keycode1.Equals("Shift"))
+            {
+                if (shift)
+                {
+                    rend.material.color = new Color(0f, 0f, 0f, 1);
+                }
+                else
+                {
+                    rend.material.color = Color.white;
+                }
+            }
+            else if (Keycode1.Equals("alt gr"))
+            {
+                if (altGr)
+                {
+                    rend.material.color = new Color(0f, 0f, 0f, 1);
+                }
+                else
+                {
+                    rend.material.color = Color.white;
+                }
+            }
+            else
+            {
+                rend.material.color = Color.white;
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ public class ScreenController : MonoBehaviour
     bool isIndexFingerPinching;
     float ringFingerPinchStrength;
     OVRHand hand;
+    static bool deleteKey;
 
     private TouchScreenKeyboard overlayKeyboard;
     public static string inputText = "";
@@ -37,7 +38,14 @@ public class ScreenController : MonoBehaviour
 
         //isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
         //ringFingerPinchStrength = hand.GetFingerPinchStrength(OVRHand.HandFinger.Ring);
-
+        if (deleteKey)
+        {
+            if(screenText.text.Length > 0)
+            {
+                screenText.text = screenText.text.Remove(screenText.text.Length - 1);
+                deleteKey = false;
+            }
+        }
         screenText.text = screenText.text + inputText;
         inputText = "";
     }
@@ -50,19 +58,12 @@ public class ScreenController : MonoBehaviour
     {
         Debug.Log("Exit");
     }
-    public static void PrintKey(KeyCode keycode, bool Shift, bool AltGr)
+    public static void PrintKey(string keycode)
     {
-        string key;
-        if (Shift)
-        {
-            key = keycode.ToString();
-        }
-        else
-        {
-            key = keycode.ToString().ToLower();
-        }
-            
-
-        inputText = inputText + key;
+        inputText = inputText + keycode;
+    }
+    public static void DeleteKey()
+    {
+        deleteKey = true;
     }
 }
