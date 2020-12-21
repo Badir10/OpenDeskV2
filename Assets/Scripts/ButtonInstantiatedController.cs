@@ -12,7 +12,7 @@ public class ButtonInstantiatedController : MonoBehaviour
     private float timePassed = 0;
     private float maxTime = 0.5f;
 
-    public float lerpTimer = 0.5f;
+    private float lerpTimer = 1;
     private SkyboxChanger skyboxChanger;
     private Renderer rend;
 
@@ -101,7 +101,7 @@ public class ButtonInstantiatedController : MonoBehaviour
 
     public void ColorLerpOn()
     {
-        rend.material.color = Color.Lerp(Color.white, Color.green, lerpTimer);
+        rend.material.color = Color.Lerp(Color.white, Color.green, lerpTimer*10);
     }
 
     public void ButtonSound()

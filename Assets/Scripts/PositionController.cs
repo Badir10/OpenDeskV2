@@ -13,6 +13,9 @@ public class PositionController : MonoBehaviour
     private List<GameObject> pointList = new List<GameObject>();
     private bool pointSetter = true;
 
+    public List<GameObject> buttonAnchors = new List<GameObject>();
+
+
     private GameObject tp;
     // Start is called before the first frame update
     void Awake(){
@@ -32,6 +35,9 @@ public class PositionController : MonoBehaviour
             Vector3 position = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
             GameObject pp = Instantiate(point, position, Quaternion.identity);
             pointList.Add(pp);
+
+            GameObject buttonAnchor = Instantiate(new GameObject("ButtonAnchor"), position, Quaternion.identity);
+            buttonAnchors.Add(buttonAnchor);
         }
 
         if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger) && pointSetter)
@@ -39,6 +45,9 @@ public class PositionController : MonoBehaviour
             Vector3 position = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
             GameObject pp = Instantiate(point, position, Quaternion.identity);
             pointList.Add(pp);
+            
+            GameObject buttonAnchor = Instantiate(new GameObject("ButtonAnchor"), position, Quaternion.identity);
+            buttonAnchors.Add(buttonAnchor);
         }
 
         if (OVRInput.GetDown(OVRInput.Button.Start))
