@@ -32,7 +32,7 @@ public class ButtonPlacement : MonoBehaviour
 
     void Update()
     {
-        musicButtons.transform.position = _buttonAnchors[0].transform.position;
-        skyboxButtons.transform.position = _buttonAnchors[1].transform.position;
+        musicButtons.transform.localPosition = _buttonAnchors[0].transform.position;
+        skyboxButtons.transform.localPosition = _buttonAnchors[1].transform.position;
     }
 }

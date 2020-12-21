@@ -856,7 +856,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a839956e4b7abc47955ab43bdc910b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lerpTimer: 1
   buttonSound: {fileID: 8259585782279378481}
 --- !u!54 &1808950304
 Rigidbody:
@@ -1205,7 +1204,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a839956e4b7abc47955ab43bdc910b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lerpTimer: 0.5
   buttonSound: {fileID: 7716836619354088118}
 --- !u!54 &771022330
 Rigidbody:
@@ -1996,7 +1994,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a839956e4b7abc47955ab43bdc910b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lerpTimer: 1
   buttonSound: {fileID: 3311411110124948842}
 --- !u!54 &90509796
 Rigidbody:
