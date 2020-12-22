@@ -14,72 +14,81 @@ public class KeyBoard : MonoBehaviour
     public TMP_Text text2;
     public TMP_Text text3;
 
-    bool pause;
+    float sinceLastClick;
     private bool pressed = false;
     Renderer rend;
+    GameObject physicalKey;
     private void Start()
     {
 
         shift = false;
-        rend = gameObject.transform.GetChild(0).gameObject.GetComponent<Renderer>();
+        rend = gameObject.transform.GetChild(0).transform.GetChild(0).gameObject.GetComponent<Renderer>();
+        physicalKey = gameObject.transform.GetChild(0).gameObject;
         text1.text = Keycode1;
         text2.text = Keycode2;
         text3.text = Keycode3;
     }
     private void Update()
     {
-        
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name + "; " + other.tag);
-        if (other.name.Equals("TargetTransform"))
+        if (Time.time - sinceLastClick > 0.05f)
         {
-            if (Keycode1.Equals("Shift")){
-                shift = !shift;
-                rend.material.color = Color.gray;
-            }else if (Keycode1.Equals("alt gr"))
+            Debug.Log(other.name + "; " + other.tag);
+            if (other.name.Equals("TargetTransform"))
             {
-                altGr = !altGr;
-                rend.material.color = Color.gray;
-            }
-            else
-            {
-                if (!pressed)
+                if (Keycode1.Equals("Shift"))
                 {
-                    rend.material.color = Color.gray;
+                    shift = !shift;
+                    rend.material.color = new Color(0.5f, 0.5f, 0.5f, 0.54f);
+                }
+                else if (Keycode1.Equals("alt gr"))
+                {
+                    altGr = !altGr;
+                    rend.material.color = new Color(0.5f, 0.5f, 0.5f, 0.54f);
+                }
+                else
+                {
+                    if (!pressed)
+                    {
+                        rend.material.color = new Color(0.5f, 0.5f, 0.5f, 0.54f);
 
-                    pressed = true;
-                    if (Keycode1.Equals("Del"))
-                    {
-                        ScreenController.DeleteKey();
-                    }else if (Keycode1.Equals("Enter"))
-                    {
-                        ScreenController.PrintKey("\n");
-                    }
-                    else if (altGr)
-                    {
-                        if(Keycode3.Length > 0)
+                        pressed = true;
+                        if (Keycode1.Equals("Del"))
                         {
-                            ScreenController.PrintKey(Keycode3);
-                        }                        
-                    }
-                    else if (shift)
-                    {
-                        if (Keycode2.Length > 0)
+                            ScreenController.DeleteKey();
+                        }
+                        else if (Keycode1.Equals("Enter"))
                         {
-                            ScreenController.PrintKey(Keycode2);
+                            ScreenController.PrintKey("\n");
+                        }
+                        else if (altGr)
+                        {
+                            if (Keycode3.Length > 0)
+                            {
+                                ScreenController.PrintKey(Keycode3);
+                            }
+                        }
+                        else if (shift)
+                        {
+                            if (Keycode2.Length > 0)
+                            {
+                                ScreenController.PrintKey(Keycode2);
+                            }
+                            else
+                            {
+                                ScreenController.PrintKey(Keycode1);
+                            }
                         }
                         else
                         {
-                            ScreenController.PrintKey(Keycode1);
+                            ScreenController.PrintKey(Keycode1.ToLower());
                         }
                     }
-                    else
-                    {
-                        ScreenController.PrintKey(Keycode1.ToLower());
-                    }
                 }
+                sinceLastClick = Time.time;
+                physicalKey.transform.localPosition = new Vector3(0, -0.128f, 0);
             }
         }
     }
@@ -92,28 +101,29 @@ public class KeyBoard : MonoBehaviour
             {
                 if (shift)
                 {
-                    rend.material.color = new Color(0f, 0f, 0f, 1);
+                    rend.material.color = new Color(0f, 0f, 0f, 0.54f);
                 }
                 else
                 {
-                    rend.material.color = Color.white;
+                    rend.material.color = new Color(1,1,1, 0.54f);
                 }
             }
             else if (Keycode1.Equals("alt gr"))
             {
                 if (altGr)
                 {
-                    rend.material.color = new Color(0f, 0f, 0f, 1);
+                    rend.material.color = new Color(0f, 0f, 0f, 0.54f);
                 }
                 else
                 {
-                    rend.material.color = Color.white;
+                    rend.material.color = new Color(1, 1, 1, 0.54f);
                 }
             }
             else
             {
-                rend.material.color = Color.white;
+                rend.material.color = new Color(1, 1, 1, 0.54f);
             }
+            physicalKey.transform.localPosition = new Vector3(0, 0, 0);
         }
     }
 }
