@@ -62,18 +62,6 @@ public class PositionController : MonoBehaviour
             pointSetter = true;
         }
 
-        if(!pointSetter){
-            Vector2 primaryAxis = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
-            Vector2 sexondaryAxis = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
-            // UP 0,99 -- DOWN -0,99
-            if(primaryAxis.y > 0.9f || sexondaryAxis.y > 0.9f){
-                tp.transform.position = new Vector3(tp.transform.position.x, tp.transform.position.y + 0.0002f, tp.transform.position.z);
-            }
-            if(primaryAxis.y < -0.9f || sexondaryAxis.y < -0.9f){
-                tp.transform.position = new Vector3(tp.transform.position.x, tp.transform.position.y - 0.0002f, tp.transform.position.z);
-            }
-        }
-
         // DebugOculus.Instance.Log(pointList.Count.ToString());
         if(pointList.Count == 3 && pointSetter){
             // Create Table
