@@ -6,24 +6,18 @@ public class TutorialPlay : MonoBehaviour
 {
 
     private bool pointSetter;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+  
 
     // Update is called once per frame
     void Update()
     {
-        if (PositionController.Instance.PointSetter == true)
+        if (PositionController.Instance.BuildState)
         {
-            enabled = true;
+            gameObject.SetActive(true);
         }
         else
         {
-            enabled = false;
+            gameObject.SetActive(false);
         }
-
-        //animator.Play(1);
     }
 }

@@ -7,17 +7,23 @@ public class PositionController : MonoBehaviour
     // Setzt eine statische Instanz zu dem Skript
     public static PositionController Instance;
 
-    [SerializeField]
-    private GameObject point;
-    [SerializeField]
-    private GameObject tablePlane;
+    [SerializeField] private GameObject point;
+    [SerializeField] private GameObject tablePlane;
     private List<GameObject> pointList = new List<GameObject>();
     private bool buildState = true;
+
+    public bool BuildState
+    {
+        get => buildState;
+        set => buildState = value;
+    }
 
     private Vector3 downLeft;
     private Vector3 downRight;
     // public List<GameObject> buttonAnchors = new List<GameObject>();
     private bool tablePosBool = false;
+    
+    
 
     private GameObject tablePlaneInstance;
 
