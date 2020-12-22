@@ -16,7 +16,7 @@ public class PositionController : MonoBehaviour
     private Vector3 downLeft;
     private Vector3 downRight;
     // public List<GameObject> buttonAnchors = new List<GameObject>();
-
+    public bool tablePosBool = false;
 
     private GameObject tp;
     // Start is called before the first frame update
@@ -66,11 +66,17 @@ public class PositionController : MonoBehaviour
             Vector2 primaryAxis = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
             Vector2 sexondaryAxis = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
             // UP 0,99 -- DOWN -0,99
+            if(primaryAxis.y == 0 && sexondaryAxis.y == 0){
+                tablePosBool = false;
+            }
+
             if(primaryAxis.y > 0.9f || sexondaryAxis.y > 0.9f){
                 tp.transform.position = new Vector3(tp.transform.position.x, tp.transform.position.y + 0.0002f, tp.transform.position.z);
+                tablePosBool = true;
             }
             if(primaryAxis.y < -0.9f || sexondaryAxis.y < -0.9f){
                 tp.transform.position = new Vector3(tp.transform.position.x, tp.transform.position.y - 0.0002f, tp.transform.position.z);
+                tablePosBool = true;
             }
         }
 
