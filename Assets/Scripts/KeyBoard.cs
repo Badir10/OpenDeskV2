@@ -18,12 +18,14 @@ public class KeyBoard : MonoBehaviour
     private bool pressed = false;
     Renderer rend;
     GameObject physicalKey;
+    AudioSource click;
     private void Start()
     {
 
         shift = false;
         rend = gameObject.transform.GetChild(0).transform.GetChild(0).gameObject.GetComponent<Renderer>();
         physicalKey = gameObject.transform.GetChild(0).gameObject;
+        click = gameObject.GetComponent<AudioSource>();
         text1.text = Keycode1;
         text2.text = Keycode2;
         text3.text = Keycode3;
@@ -89,6 +91,8 @@ public class KeyBoard : MonoBehaviour
                 }
                 sinceLastClick = Time.time;
                 physicalKey.transform.localPosition = new Vector3(0, -0.128f, 0);
+                click.Stop();
+                click.Play();
             }
         }
     }
