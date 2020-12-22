@@ -332,7 +332,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f556149dee2175e43ae60d0ea99b2d26, type: 3}
+  m_audioClip: {fileID: 8300000, guid: db6f1cf0f6bf255478f725080927bf97, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -445,12 +445,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClips:
-  - {fileID: 8300000, guid: f556149dee2175e43ae60d0ea99b2d26, type: 3}
+  - {fileID: 8300000, guid: db6f1cf0f6bf255478f725080927bf97, type: 3}
   - {fileID: 8300000, guid: 7cc1c2e26a7457b47862230577f6e58d, type: 3}
   - {fileID: 8300000, guid: f5560fb138244504bba8f70c88850be7, type: 3}
   - {fileID: 8300000, guid: 9738b8fa62b643c43b41e5fe5b6b1fad, type: 3}
   - {fileID: 8300000, guid: cce2d4e70c29c304cb227d46cdeaaa43, type: 3}
   - {fileID: 8300000, guid: 7a3190d018301a045862157fd945d8b4, type: 3}
+  - {fileID: 8300000, guid: f556149dee2175e43ae60d0ea99b2d26, type: 3}
 --- !u!1 &619944131 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5569746675015671323, guid: 744b0fd5b8fe6ad4fbf7bcaf716ee24f, type: 3}
