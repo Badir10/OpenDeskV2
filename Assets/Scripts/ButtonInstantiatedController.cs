@@ -10,7 +10,7 @@ public class ButtonInstantiatedController : MonoBehaviour
     // Hier befinden sich alle Eventhandler die bei der Aktivierung der Buttons verwendet werden
     private bool pauseBool;
     private float timePassed = 0;
-    private float maxTime = 0.5f;
+    private float maxTime = 0.7f;
 
     private float lerpTimer = 1;
     private SkyboxChanger skyboxChanger;
