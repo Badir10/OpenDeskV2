@@ -20,6 +20,15 @@ public class ButtonInstantiatedController : MonoBehaviour
 
     public AudioSource buttonSound;
 
+    [SerializeField]
+    private Sprite iconDef;
+    [SerializeField]
+    private Sprite iconAlt;
+    [SerializeField]
+    private GameObject toInfluence;
+
+    public 
+
     void Awake()
     {
         skyboxChanger = GameObject.Find("Skybox").GetComponent<SkyboxChanger>();
@@ -101,11 +110,38 @@ public class ButtonInstantiatedController : MonoBehaviour
 
     public void ColorLerpOn()
     {
-        rend.material.color = Color.Lerp(Color.white, Color.green, lerpTimer*10);
+        
+            rend.material.color = Color.Lerp(Color.white, Color.green, lerpTimer * 10);
+        
     }
 
     public void ButtonSound()
     {
-        buttonSound.Play();
+        
+            buttonSound.Play();
+        
     }
+
+    public void Paint()
+    {
+            
+        PaintTool.Instance.StartPaint();
+        SpriteRenderer rend = gameObject.transform.Find("ButtonIcon").GetComponent<SpriteRenderer>();
+        if (PaintTool.isPainting)
+        {
+            rend.sprite = iconAlt;
+        }
+        else
+        {
+            rend.sprite = iconDef;
+        }
+    }
+    public void DeletePaint()
+    {
+        SpriteRenderer rend = toInfluence.transform.Find("ButtonIcon").GetComponent<SpriteRenderer>();
+        rend.sprite = iconDef;
+        PaintTool.Instance.DeleteAllPaint();
+        
+    }
+
 }

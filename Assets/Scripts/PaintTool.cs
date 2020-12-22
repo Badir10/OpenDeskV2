@@ -13,7 +13,7 @@ public class PaintTool : MonoBehaviour
     private OVRHand handR;
     [SerializeField]
     private float pinchThreshold = 0.7f;
-    bool isPainting;
+    public static bool isPainting;
     bool alreadyPainting;
     bool lastPinchLeft;
     bool lastPinchRight;
@@ -21,6 +21,12 @@ public class PaintTool : MonoBehaviour
 
     GameObject boneL;
     GameObject boneR;
+
+    public static PaintTool Instance;
+    void Awake()
+    {
+        Instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -107,7 +113,7 @@ public class PaintTool : MonoBehaviour
             //continue current paintig
             currentPainting.positionCount = currentPainting.positionCount + 1;
             currentPainting.SetPosition(currentPainting.positionCount-1, point);
-            //currentPainting.Simplify(0.003f);
+            //currentPainting.Simplify(0.01f);
         }
     }
     public void StartPaint()
@@ -116,9 +122,10 @@ public class PaintTool : MonoBehaviour
     }
     public void DeleteAllPaint()
     {
-        for(int i = 0; i<gameObject.transform.childCount; i++)
+        isPainting = false;
+        for(int i = gameObject.transform.childCount-1; i>=0; i--)
         {
-            Destroy(gameObject.transform.GetChild(0));
+            Destroy(gameObject.transform.GetChild(i).gameObject);
         }
     }
 }
