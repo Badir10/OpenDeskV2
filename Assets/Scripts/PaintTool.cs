@@ -12,7 +12,7 @@ public class PaintTool : MonoBehaviour
     [SerializeField]
     private OVRHand handR;
     [SerializeField]
-    private float pinchThreshold = 0.7f;
+    private float pinchThreshold = 0.9f;
     public static bool isPainting;
     bool alreadyPainting;
     bool lastPinchLeft;
