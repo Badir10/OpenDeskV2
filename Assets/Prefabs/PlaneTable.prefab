@@ -852,14 +852,6 @@ PrefabInstance:
       propertyPath: toInfluence
       value: 
       objectReference: {fileID: 8543037802683464499}
-    - target: {fileID: 2134280537475156510, guid: 2933c25b69d6cfc40a77d2e8a6ef3085, type: 3}
-      propertyPath: iconAlt
-      value: 
-      objectReference: {fileID: 21300000, guid: 741744f82503f624086a5f74627c556c, type: 3}
-    - target: {fileID: 2134280537475156510, guid: 2933c25b69d6cfc40a77d2e8a6ef3085, type: 3}
-      propertyPath: iconDef
-      value: 
-      objectReference: {fileID: 21300000, guid: 72202fd8a34d7dc4c8bab81da88ab373, type: 3}
     - target: {fileID: 5910175973416064887, guid: 2933c25b69d6cfc40a77d2e8a6ef3085, type: 3}
       propertyPath: tablePosition
       value: 
@@ -1738,14 +1730,6 @@ PrefabInstance:
       propertyPath: tablePosition
       value: 
       objectReference: {fileID: 3938435124995263852}
-    - target: {fileID: 5958458588865386486, guid: 1879ea831e3c6bb428580464bfe36882, type: 3}
-      propertyPath: iconDef
-      value: 
-      objectReference: {fileID: 21300000, guid: 72202fd8a34d7dc4c8bab81da88ab373, type: 3}
-    - target: {fileID: 5958458588865386486, guid: 1879ea831e3c6bb428580464bfe36882, type: 3}
-      propertyPath: iconAlt
-      value: 
-      objectReference: {fileID: 21300000, guid: 741744f82503f624086a5f74627c556c, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1879ea831e3c6bb428580464bfe36882, type: 3}
 --- !u!1 &8543037802683464499 stripped

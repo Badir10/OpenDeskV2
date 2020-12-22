@@ -363,7 +363,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8395534323219825046}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.0572, y: 0, z: 0.1}
   m_LocalScale: {x: 0.05, y: 0.01, z: 0.05}
   m_Children:
@@ -539,8 +539,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSound: {fileID: 9048295161992884382}
-  IconDef: {fileID: 0}
-  IconAlt: {fileID: 0}
+  iconDef: {fileID: 21300000, guid: 5eba552fc1fd0094891940e8bca6eccc, type: 3}
+  iconAlt: {fileID: 21300000, guid: bdbc9cc7921bd71428dfb6e621a4fde3, type: 3}
+  toInfluence: {fileID: 0}
 --- !u!54 &3390433899502543707
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -872,7 +873,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f2bda7ea5accc994e859d055dce1b4b6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 40c39732706a9ef459580569850b6ddc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
