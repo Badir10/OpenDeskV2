@@ -22,17 +22,17 @@ public class ButtonLimitSpring : MonoBehaviour
     void Update()
     {
 
-        if (Vector3.Distance(tablePosition.transform.position, transform.position) >= distanceDown && !PositionController.Instance.tablePosBool)
+        if (Vector3.Distance(tablePosition.transform.position, transform.position) >= distanceDown && !PositionController.Instance.getTablePosBool())
         {
             transform.position = buttonPosition;
         }
 
-        if (transform.position.y <= distanceUp && !PositionController.Instance.tablePosBool)
+        if (transform.position.y <= distanceUp && !PositionController.Instance.getTablePosBool())
         {
             transform.position = new Vector3(transform.position.x, distanceUp, transform.position.z);
         }
 
-        if (transform.position.y != tablePosition.position.y && PositionController.Instance.tablePosBool)
+        if (transform.position.y != tablePosition.position.y && PositionController.Instance.getTablePosBool())
         {
             transform.localPosition = new Vector3(transform.localPosition.x, tablePosition.localPosition.y, transform.localPosition.z);
             distanceDown = Vector3.Distance(tablePosition.transform.position, transform.position);
