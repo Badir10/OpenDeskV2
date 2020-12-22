@@ -1732,7 +1732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1635059277367540229, guid: 1879ea831e3c6bb428580464bfe36882, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5764358422195253878, guid: 1879ea831e3c6bb428580464bfe36882, type: 3}
       propertyPath: tablePosition
