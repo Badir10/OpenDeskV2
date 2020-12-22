@@ -16,7 +16,7 @@ public class PositionController : MonoBehaviour
     private Vector3 downLeft;
     private Vector3 downRight;
     // public List<GameObject> buttonAnchors = new List<GameObject>();
-    public bool tablePosBool = false;
+    private bool tablePosBool = false;
 
     private GameObject tp;
     // Start is called before the first frame update
@@ -208,5 +208,9 @@ public class PositionController : MonoBehaviour
 
     public Vector3 getRightPos(){
         return downRight;
+    }
+
+    public bool getTablePosBool(){
+        return tablePosBool;
     }
 }
