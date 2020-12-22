@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PositionController : MonoBehaviour
 {
+    // Setzt eine statische Instanz zu dem Skript
     public static PositionController Instance;
 
     [SerializeField]
@@ -11,106 +12,56 @@ public class PositionController : MonoBehaviour
     [SerializeField]
     private GameObject tablePlane;
     private List<GameObject> pointList = new List<GameObject>();
-    private bool pointSetter = true;
+    private bool buildState = true;
 
     private Vector3 downLeft;
     private Vector3 downRight;
     // public List<GameObject> buttonAnchors = new List<GameObject>();
     private bool tablePosBool = false;
 
-    private GameObject tp;
-    // Start is called before the first frame update
+    private GameObject tablePlaneInstance;
+
     void Awake(){
         Instance = this;
-    }
-
-    void Start()
-    {
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger)  && pointSetter)
-        {
-            // DebugOculus.Instance.Log(rightController.transform.position.ToString());
-            Vector3 position = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
-            GameObject pp = Instantiate(point, position, Quaternion.identity);
-            pointList.Add(pp);
-
-            // GameObject buttonAnchor = Instantiate(new GameObject("ButtonAnchor"), position, Quaternion.identity);
-            // buttonAnchors.Add(buttonAnchor);
+        // Die Variable buildState ist ein Boolean und repräsentiert den Zustand des Baumodus. Ist der Baumodus im Prozess, so ist der buildState = true;
+        // Ist der Baumodus beendet, so wird der buildState = false; gesetzt.
+        if(buildState){
+            // Methode zum setzen der Punkte per Controller
+            SetPoints();
+            // Methode zum erstellen des Tisches
+            InstanceTable();
+        } else{
+            // In der Methode kann der Nutzer per Stick, die Tischhöhe beeinflussen
+            PositionTableWithStick();
         }
-
-        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger) && pointSetter)
-        {
-            Vector3 position = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
-            GameObject pp = Instantiate(point, position, Quaternion.identity);
-            pointList.Add(pp);
-            
-            // GameObject buttonAnchor = Instantiate(new GameObject("ButtonAnchor"), position, Quaternion.identity);
-            // buttonAnchors.Add(buttonAnchor);
-        }
-
-        if (OVRInput.GetDown(OVRInput.Button.Start))
-        {
-            foreach(GameObject points in pointList){
-                GameObject.Destroy(points);
-            }
-            pointList = new List<GameObject>();
-            GameObject.Destroy(tp);
-            pointSetter = true;
-        }
-
-        if(!pointSetter){
-            Vector2 primaryAxis = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
-            Vector2 sexondaryAxis = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
-            // UP 0,99 -- DOWN -0,99
-            if(primaryAxis.y == 0 && sexondaryAxis.y == 0){
-                tablePosBool = false;
-            }
-
-            if(primaryAxis.y > 0.9f || sexondaryAxis.y > 0.9f){
-                tp.transform.position = new Vector3(tp.transform.position.x, tp.transform.position.y + 0.0002f, tp.transform.position.z);
-                tablePosBool = true;
-            }
-            if(primaryAxis.y < -0.9f || sexondaryAxis.y < -0.9f){
-                tp.transform.position = new Vector3(tp.transform.position.x, tp.transform.position.y - 0.0002f, tp.transform.position.z);
-                tablePosBool = true;
-            }
-        }
-
-        // DebugOculus.Instance.Log(pointList.Count.ToString());
-        if(pointList.Count == 3 && pointSetter){
-            // Create Table
-            pointSetter = false;
-            GameObject pointA = pointList[0];
-            GameObject pointB = pointList[1];
-            GameObject pointC = pointList[2];
-            // Calculate rectangle
-            CreateRectangle(pointA, pointB, pointC);
-            foreach(GameObject point in pointList){
-                GameObject.Destroy(point);
-            }
-        } 
-
-        // if (OVRInput.GetDown(OVRInput.PrimaryHandTrigger))
-        // {
-        //     gameObject.transform.position = leftController.transform.position;
-        //     gameObject.transform.position -= new Vector3(0, 0.07f, 0);
-        // }
+        // Die Methode löscht die gesamten instanzierten Elemente (Reset)
+        DeleteInstance();
     }
 
     void CreateRectangle(GameObject posA, GameObject posB, GameObject posC){
+        // Dies sind die Punkte von den instanzierten "Points"
         Vector3 p0 = posA.transform.localPosition;
         Vector3 p1 = posB.transform.localPosition;
         Vector3 p2 = posC.transform.localPosition;
 
+        // Der Vektor zwischen dem Punkt 0 und Punkt 1 wird berechnet
         Vector3 v0 = p0 - p1;
         //v0.y = 0;
+
+        // Der Vektor zwischen dem Punkt 2 und Punkt 1 wird berechnet
         Vector3 v1 = p2 - p1;
         //v1.y = 0;
+
+        // Der zentrierte Punkt, von dem Viereck wird berechnet
         Vector3 center = p0 + (p2 - p0) / 2;
+
+        // Die Höhe vom Center wird um 0.03 verringert, da die Höhe von den Punkten auf dem Tisch leicht versetzt sind.
+        // Die liegt daran, da die erstellten Punkte auf dem Tisch instanziert wurden, und nicht in dem Tisch.
         center.y = center.y - 0.03f;
         Vector3 u0 = new Vector3(1,0,0);
 
@@ -132,22 +83,22 @@ public class PositionController : MonoBehaviour
             {
                 if (v1.x >= 0)
                 {
-                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, maxAngle, 0));
+                    tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, maxAngle, 0));
                 }
                 else
                 {
-                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, -minAngle, 0));
+                    tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, -minAngle, 0));
                 }
             }
             else
             {
                 if (v1.x >= 0)
                 {
-                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, minAngle, 0));
+                    tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, minAngle, 0));
                 }
                 else
                 {
-                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, -maxAngle, 0));
+                    tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, -maxAngle, 0));
                 }
             }
         }
@@ -159,43 +110,52 @@ public class PositionController : MonoBehaviour
             {
                 if (v1.x >= 0)
                 {
-                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, minAngle, 0));
+                    tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, minAngle, 0));
                 }
                 else
                 {
-                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, -maxAngle, 0));
+                    tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, -maxAngle, 0));
                 }
             }
             else
             {
                 if (v1.x >= 0)
                 {
-                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, maxAngle, 0));
+                    tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, maxAngle, 0));
                 }
                 else
                 {
-                    tp = Instantiate(tablePlane, center, Quaternion.Euler(0, -minAngle, 0));
+                    tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, -minAngle, 0));
                 }
             }
         }
-        tp.transform.GetChild(0).transform.localScale = new Vector3(lengthv0, 0.03f, lengthv1);
+        tablePlaneInstance.transform.GetChild(0).transform.localScale = new Vector3(lengthv0, 0.03f, lengthv1);
 
-        GameObject scaledTable = tp.transform.GetChild(0).gameObject;
-        float legScaleY = tp.transform.localPosition.y;
+        GameObject scaledTable = tablePlaneInstance.transform.GetChild(0).gameObject;
+
+        // Dies ist die Skalierung der Tischbeine in Richtung Y;
+        float legScaleY = tablePlaneInstance.transform.localPosition.y;
+        // Dies ist die Skalierung der Tischbeine in Richtung X und Z;
         float legScaleXZ = 0.05f;
-        Vector3 topRight = new Vector3(scaledTable.transform.localScale.x - legScaleXZ, -(tp.transform.position.y), scaledTable.transform.localScale.z - legScaleXZ) / 2;
-        Vector3 topLeft = new Vector3(-(scaledTable.transform.localScale.x) + legScaleXZ, -(tp.transform.position.y), scaledTable.transform.localScale.z - legScaleXZ) / 2;
-        downRight = new Vector3(scaledTable.transform.localScale.x - legScaleXZ, -(tp.transform.position.y), -(scaledTable.transform.localScale.z) + legScaleXZ) / 2;
-        downLeft = new Vector3(-(scaledTable.transform.localScale.x) + legScaleXZ, -(tp.transform.position.y), -(scaledTable.transform.localScale.z) + legScaleXZ) / 2;
+
+        // Die Eckpunkte von dem instanzierten Tisch werden berechnet
+        Vector3 topRight = new Vector3(scaledTable.transform.localScale.x - legScaleXZ, -(tablePlaneInstance.transform.position.y), scaledTable.transform.localScale.z - legScaleXZ) / 2;
+        Vector3 topLeft = new Vector3(-(scaledTable.transform.localScale.x) + legScaleXZ, -(tablePlaneInstance.transform.position.y), scaledTable.transform.localScale.z - legScaleXZ) / 2;
+        downRight = new Vector3(scaledTable.transform.localScale.x - legScaleXZ, -(tablePlaneInstance.transform.position.y), -(scaledTable.transform.localScale.z) + legScaleXZ) / 2;
+        downLeft = new Vector3(-(scaledTable.transform.localScale.x) + legScaleXZ, -(tablePlaneInstance.transform.position.y), -(scaledTable.transform.localScale.z) + legScaleXZ) / 2;
+        
+        // Die berechneten Eckpunkte werden in einem Array zusammengefügt
         Vector3[] legPosition = new[] {topRight, topLeft, downRight, downLeft};
+        // Die Tischtextur wird zwischengespeichert, damit die erstellten Tischbeine, die gleiche Textur erhält, wie die Tischplatte
         MeshRenderer scaledTableMesh = scaledTable.GetComponent<MeshRenderer>();
 
+        // Die Eckpunkte werden durchlaufen und erstellen an jedem Punkt ein Tischbein mit der korrekten Höhe und der Tischtextur
         foreach(Vector3 legpos in legPosition){
             GameObject leg = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            leg.transform.localEulerAngles = tp.transform.localEulerAngles;
-            leg.transform.position = tp.transform.position;
+            leg.transform.localEulerAngles = tablePlaneInstance.transform.localEulerAngles;
+            leg.transform.position = tablePlaneInstance.transform.position;
             leg.transform.localScale = new Vector3(legScaleXZ, legScaleY, legScaleXZ);
-            leg.transform.SetParent(tp.transform);
+            leg.transform.SetParent(tablePlaneInstance.transform);
             leg.transform.localPosition = legpos;
             MeshRenderer legMesh = leg.GetComponent<MeshRenderer>();
             legMesh.material = scaledTableMesh.material;
@@ -212,5 +172,89 @@ public class PositionController : MonoBehaviour
 
     public bool getTablePosBool(){
         return tablePosBool;
+    }
+
+    private void SetPoints(){
+        // Wenn der "SecondaryIndexTrigger" Button gedrückt wurde,
+        // dann, wird eine Instanz von dem Prefab "point" an der Position vom Controller erstellt.
+        // Die Instanz wird in der Liste PointList hinzugefügt.
+        if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
+        {
+            Vector3 position = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
+            GameObject pointInstance = Instantiate(point, position, Quaternion.identity);
+            pointList.Add(pointInstance);
+
+            // GameObject buttonAnchor = Instantiate(new GameObject("ButtonAnchor"), position, Quaternion.identity);
+            // buttonAnchors.Add(buttonAnchor);
+        }
+
+        // Das ist die gleiche Abfrage wie im oberen Teil, nur mit dem anderen Controller
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+        {
+            Vector3 position = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
+            GameObject pointInstance = Instantiate(point, position, Quaternion.identity);
+            pointList.Add(pointInstance);
+            
+            // GameObject buttonAnchor = Instantiate(new GameObject("ButtonAnchor"), position, Quaternion.identity);
+            // buttonAnchors.Add(buttonAnchor);
+        }
+    }
+
+    private void DeleteInstance(){
+        // Wenn der Button Start vom linken Controller gedrückt wurde, werden alle Instanzierten Prefabs (Points, tablePlaneInstance) zerstört
+        // Dies dient dazu um die gesetzten Points zu reseten, falls der instanzierte Point nicht korrekt platziert wurde
+        if (OVRInput.GetDown(OVRInput.Button.Start))
+        {
+            foreach(GameObject points in pointList){
+                GameObject.Destroy(points);
+            }
+            pointList = new List<GameObject>();
+            GameObject.Destroy(tablePlaneInstance);
+            buildState = true;
+        }
+    }
+
+    private void InstanceTable(){
+        // Wenn die Liste Pointlist mit drei Points gefüllt ist, wird der buildState auf false gesetzt,
+        // damit die Bedinung nur ein Mal aufgerufen wird, und die anderen Bedinungen, wie das Platzieren von weiteren Points verhindert wird.
+        if(pointList.Count == 3){
+            // Create Table
+            buildState = false;
+            GameObject pointA = pointList[0];
+            GameObject pointB = pointList[1];
+            GameObject pointC = pointList[2];
+            // Der Methode CreateRectangle werden die 3 platzierten Punkte übergeben um eine Instanz vom Prefab "tablePlane" an den gesetzten Punkten zu erstellen.
+            CreateRectangle(pointA, pointB, pointC);
+            // Nachdem die Methode ausgeführt wurde und ein Tisch auf der Höhe der platzierten Points ist, werden die gesetzten visuellen Punkte aus der Scene entfernt
+            foreach(GameObject point in pointList){
+                GameObject.Destroy(point);
+            }
+        } 
+    }
+
+    private void PositionTableWithStick(){
+        // Der Nutzer die Möglichkeit in der Methode die Punkte mit dem Controller Stick, die Höhe (Y-coordinate) vom Tisch zu verstellen.
+        Vector2 primaryAxis = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
+        Vector2 secondaryAxis = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
+        // UP 0,99 -- DOWN -0,99
+
+        // Wenn der Controller Stick unberührt ist, soll tablePosBool auf false gesetzt werden
+        // Das ist dafür da, um die Buttons, die auf dem Tisch sind (Die Kind-Objekte) mit auf der Höhe des Tisches zu skalieren. 
+        if(primaryAxis.y == 0 && secondaryAxis.y == 0){
+            tablePosBool = false;
+        }
+
+        // Wenn der Controller Stick nach oben gerichtet ist, soll die Y Position von dem Tisch pro Fram um 0.0002f erhöht werden.
+        // Das ist dazu da, um die Höhe des Tisches, nach der Erstellung, korrekt zu justieren.
+        if(primaryAxis.y > 0.9f || secondaryAxis.y > 0.9f){
+            tablePlaneInstance.transform.position = new Vector3(tablePlaneInstance.transform.position.x, tablePlaneInstance.transform.position.y + 0.0002f, tablePlaneInstance.transform.position.z);
+            tablePosBool = true;
+        }
+
+        // Das ist die gleiche Bedinungung nur, dass der Stick vom Controller nach unten zeigt und die Tisch Höhe um 0.0002f verringert
+        if(primaryAxis.y < -0.9f || secondaryAxis.y < -0.9f){
+            tablePlaneInstance.transform.position = new Vector3(tablePlaneInstance.transform.position.x, tablePlaneInstance.transform.position.y - 0.0002f, tablePlaneInstance.transform.position.z);
+            tablePosBool = true;
+        }
     }
 }
