@@ -13,7 +13,9 @@ public class PositionController : MonoBehaviour
     private List<GameObject> pointList = new List<GameObject>();
     private bool pointSetter = true;
 
-    public List<GameObject> buttonAnchors = new List<GameObject>();
+    private Vector3 downLeft;
+    private Vector3 downRight;
+    // public List<GameObject> buttonAnchors = new List<GameObject>();
 
 
     private GameObject tp;
@@ -36,8 +38,8 @@ public class PositionController : MonoBehaviour
             GameObject pp = Instantiate(point, position, Quaternion.identity);
             pointList.Add(pp);
 
-            GameObject buttonAnchor = Instantiate(new GameObject("ButtonAnchor"), position, Quaternion.identity);
-            buttonAnchors.Add(buttonAnchor);
+            // GameObject buttonAnchor = Instantiate(new GameObject("ButtonAnchor"), position, Quaternion.identity);
+            // buttonAnchors.Add(buttonAnchor);
         }
 
         if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger) && pointSetter)
@@ -46,8 +48,8 @@ public class PositionController : MonoBehaviour
             GameObject pp = Instantiate(point, position, Quaternion.identity);
             pointList.Add(pp);
             
-            GameObject buttonAnchor = Instantiate(new GameObject("ButtonAnchor"), position, Quaternion.identity);
-            buttonAnchors.Add(buttonAnchor);
+            // GameObject buttonAnchor = Instantiate(new GameObject("ButtonAnchor"), position, Quaternion.identity);
+            // buttonAnchors.Add(buttonAnchor);
         }
 
         if (OVRInput.GetDown(OVRInput.Button.Start))
@@ -73,8 +75,6 @@ public class PositionController : MonoBehaviour
                 GameObject.Destroy(point);
             }
         } 
-
-
 
         // if (OVRInput.GetDown(OVRInput.PrimaryHandTrigger))
         // {
@@ -167,8 +167,8 @@ public class PositionController : MonoBehaviour
         float legScaleXZ = 0.05f;
         Vector3 topRight = new Vector3(scaledTable.transform.localScale.x - legScaleXZ, -(tp.transform.position.y), scaledTable.transform.localScale.z - legScaleXZ) / 2;
         Vector3 topLeft = new Vector3(-(scaledTable.transform.localScale.x) + legScaleXZ, -(tp.transform.position.y), scaledTable.transform.localScale.z - legScaleXZ) / 2;
-        Vector3 downRight = new Vector3(scaledTable.transform.localScale.x - legScaleXZ, -(tp.transform.position.y), -(scaledTable.transform.localScale.z) + legScaleXZ) / 2;
-        Vector3 downLeft = new Vector3(-(scaledTable.transform.localScale.x) + legScaleXZ, -(tp.transform.position.y), -(scaledTable.transform.localScale.z) + legScaleXZ) / 2;
+        downRight = new Vector3(scaledTable.transform.localScale.x - legScaleXZ, -(tp.transform.position.y), -(scaledTable.transform.localScale.z) + legScaleXZ) / 2;
+        downLeft = new Vector3(-(scaledTable.transform.localScale.x) + legScaleXZ, -(tp.transform.position.y), -(scaledTable.transform.localScale.z) + legScaleXZ) / 2;
         Vector3[] legPosition = new[] {topRight, topLeft, downRight, downLeft};
         MeshRenderer scaledTableMesh = scaledTable.GetComponent<MeshRenderer>();
 
@@ -182,5 +182,13 @@ public class PositionController : MonoBehaviour
             MeshRenderer legMesh = leg.GetComponent<MeshRenderer>();
             legMesh.material = scaledTableMesh.material;
         }
+    }
+
+    public Vector3 getLeftPos(){
+        return downLeft;
+    }
+
+    public Vector3 getRightPos(){
+        return downRight;
     }
 }
