@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//(Veraltet) Setzt ganzen Tisch an Position des Controllers
 public class LerpToController : MonoBehaviour
 {
     public GameObject rightController;

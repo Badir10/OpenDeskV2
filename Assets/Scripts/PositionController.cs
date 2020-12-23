@@ -7,8 +7,8 @@ public class PositionController : MonoBehaviour
     // Setzt eine statische Instanz zu dem Skript
     public static PositionController Instance;
 
-    [SerializeField] private GameObject point;
-    [SerializeField] private GameObject tablePlane;
+    [SerializeField] private GameObject point;          //Prefab der Eck-Kugeln
+    [SerializeField] private GameObject tablePlane;     //Tisch Prefab
     private List<GameObject> pointList = new List<GameObject>();
     private bool buildState = true;
 
@@ -55,89 +55,115 @@ public class PositionController : MonoBehaviour
         Vector3 p1 = posB.transform.localPosition;
         Vector3 p2 = posC.transform.localPosition;
 
+
         // Der Vektor zwischen dem Punkt 0 und Punkt 1 wird berechnet
         Vector3 v0 = p0 - p1;
-        //v0.y = 0;
 
         // Der Vektor zwischen dem Punkt 2 und Punkt 1 wird berechnet
         Vector3 v1 = p2 - p1;
-        //v1.y = 0;
 
         // Der zentrierte Punkt, von dem Viereck wird berechnet
         Vector3 center = p0 + (p2 - p0) / 2;
 
         // Die Höhe vom Center wird um 0.03 verringert, da die Höhe von den Punkten auf dem Tisch leicht versetzt sind.
-        // Die liegt daran, da die erstellten Punkte auf dem Tisch instanziert wurden, und nicht in dem Tisch.
+        // Das liegt daran, da die erstellten Punkte auf dem Tisch instanziert wurden, und nicht in dem Tisch.
         center.y = center.y - 0.03f;
+        //Referenzvector der Punkte p0 & p1 der Tischplatte wie das Objekt in der Welt instanziert wird
         Vector3 u0 = new Vector3(1,0,0);
 
-        float scalar = Vector3.Dot(v0, u0);
+        //Es wird davon ausgegangen, dass v0 der Vector der Vorderseite des Tisches ist (also p0 und p1 die zwei vorderen Eckpunke am Tisch sind
+        //Skalar zwischen v0 und u0
+        float scalar = Vector3.Dot(v0, u0);    
+        //Längenberechnung der unterschiedlichen Vektoren
         float lengthv0 = Vector3.Magnitude(v0);
         float lengthv1 = Vector3.Magnitude(v1);
         float lengthu0 = Vector3.Magnitude(u0);
+        //Winkelberechnung zwischen v0 und u0
         float beta = Mathf.Acos(scalar/(lengthu0*lengthv0));
+        //Winkel umrechnen von rad zu grad
         beta = beta * 180 / Mathf.PI;
+        //Gegenwinkel ausrechnen
         float alpha = 180- beta;
-        Debug.LogError("Winkel a: " + alpha + "; Winkel b: " + beta + "; Vector V0: " + v0.x + ", " + v0.y + ", " + v0.z + "; Scalar: " + scalar);
+        Debug.Log("Winkel a: " + alpha + "; Winkel b: " + beta + "; Vector V0: " + v0.x + ", " + v0.y + ", " + v0.z + "; Scalar: " + scalar);
+
         float minAngle;
         float maxAngle;
+        //Je nach Rotation von v0 muss ein anderer Rotationswinkel gewählt werden (abhängig ob v0 +/- in x-Richtung und +/- in z-Richtung verläuft, somit 8 unterschiedliche States)
         if (scalar >= 0)
         {
+            //Ist das Skalar >= 0 ist beta der kleinere der beiden Winkel
             minAngle = beta;
             maxAngle = alpha;
+            //Unterscheidung ob v0 in z-Richtung positiv oder negativ verläuft
             if (v0.z >= 0)
             {
+                //Unterscheidung ob v0 in x-Richtung positiv oder negativ verläuft
                 if (v1.x >= 0)
                 {
+                    //Instanzierung des Tisches mit korrekter Rotation
                     tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, maxAngle, 0));
                 }
                 else
                 {
+                    //Instanzierung des Tisches mit korrekter Rotation
                     tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, -minAngle, 0));
                 }
             }
             else
             {
+                //Unterscheidung ob v0 in x-Richtung positiv oder negativ verläuft
                 if (v1.x >= 0)
                 {
+                    //Instanzierung des Tisches mit korrekter Rotation
                     tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, minAngle, 0));
                 }
                 else
                 {
+                    //Instanzierung des Tisches mit korrekter Rotation
                     tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, -maxAngle, 0));
                 }
             }
         }
         else
         {
+            //Ist das Skalar < 0 ist alpha der kleinere der beiden Winkel
             minAngle = alpha;
             maxAngle = beta;
+            //Unterscheidung ob v0 in z-Richtung positiv oder negativ verläuft
             if (v0.z >= 0)
             {
+                //Unterscheidung ob v0 in x-Richtung positiv oder negativ verläuft
                 if (v1.x >= 0)
                 {
+                    //Instanzierung des Tisches mit korrekter Rotation
                     tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, minAngle, 0));
                 }
                 else
                 {
+                    //Instanzierung des Tisches mit korrekter Rotation
                     tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, -maxAngle, 0));
                 }
             }
             else
             {
+                //Unterscheidung ob v0 in x-Richtung positiv oder negativ verläuft
                 if (v1.x >= 0)
                 {
+                    //Instanzierung des Tisches mit korrekter Rotation
                     tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, maxAngle, 0));
                 }
                 else
                 {
+                    //Instanzierung des Tisches mit korrekter Rotation
                     tablePlaneInstance = Instantiate(tablePlane, center, Quaternion.Euler(0, -minAngle, 0));
                 }
             }
         }
+        //Skaliere nur die Tischplatte den Längen der jeweiligen Vektoren entsprechend
         tablePlaneInstance.transform.GetChild(0).transform.localScale = new Vector3(lengthv0, 0.03f, lengthv1);
 
         GameObject scaledTable = tablePlaneInstance.transform.GetChild(0).gameObject;
+
 
         // Dies ist die Skalierung der Tischbeine in Richtung Y;
         float legScaleY = tablePlaneInstance.transform.localPosition.y;
