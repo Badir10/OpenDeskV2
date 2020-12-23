@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SkyboxChanger : MonoBehaviour
 {
-    ///// In dieser Klasse befinden sich alle methoden die fuer das Abspielen und Pausieren der Musik notwendig sind /////
+    ///// In dieser Klasse befinden sich alle Methoden die fuer das Abspielen und Pausieren der Musik notwendig sind /////
     /// 
 
     public Material[] skyBox;
@@ -49,7 +49,7 @@ public class SkyboxChanger : MonoBehaviour
         
     }
 
-    // Waehlt die naechsthoehere Umgebung aus
+    // Waehlt die naechste Umgebung aus
     public void UmgebungUp()
     {
         int oldScene = currentUmgebung;
