@@ -29,37 +29,37 @@ public class SkyboxChanger : MonoBehaviour
     // Waehlt die naechste Skybox aus
     public void SkyboxUp()
     {
+        currentSkybox++;
         if (currentSkybox == skyBox.Length)
         {
             currentSkybox = 0;
         }
-            
-        currentSkybox++;
         RenderSettings.skybox = skyBox[currentSkybox];
     }
 
     // Waehlt die vorherige Skybox aus
     public void SkyboxDown()
     {
-        if (currentSkybox == 0)
-        {
-            currentSkybox = skyBox.Length;
-        }
         currentSkybox--;
+        if (currentSkybox < 0)
+        {
+            currentSkybox = skyBox.Length-1;
+        }
         RenderSettings.skybox = skyBox[currentSkybox];
+        
     }
 
     // Waehlt die naechsthoehere Umgebung aus
     public void UmgebungUp()
     {
+        int oldScene = currentUmgebung;
+        currentUmgebung++;
+
         if (currentUmgebung == surrounding.Length)
         {
             currentUmgebung = 0;
         }
-        surrounding[currentUmgebung].SetActive(false);
-        currentUmgebung++;
+        surrounding[oldScene].SetActive(false);
         surrounding[currentUmgebung].SetActive(true);
     }
-    
-    
 }
