@@ -25,35 +25,35 @@ public class SkyboxChanger : MonoBehaviour
 
     public void SkyboxUp()
     {
+        currentSkybox++;
         if (currentSkybox == skyBox.Length)
         {
             currentSkybox = 0;
         }
-            
-        currentSkybox++;
         RenderSettings.skybox = skyBox[currentSkybox];
     }
 
     public void SkyboxDown()
     {
-        if (currentSkybox == 0)
-        {
-            currentSkybox = skyBox.Length;
-        }
         currentSkybox--;
+        if (currentSkybox < 0)
+        {
+            currentSkybox = skyBox.Length-1;
+        }
         RenderSettings.skybox = skyBox[currentSkybox];
+        
     }
 
     public void UmgebungUp()
     {
+        int oldScene = currentUmgebung;
+        currentUmgebung++;
+
         if (currentUmgebung == surrounding.Length)
         {
             currentUmgebung = 0;
         }
-        surrounding[currentUmgebung].SetActive(false);
-        currentUmgebung++;
+        surrounding[oldScene].SetActive(false);
         surrounding[currentUmgebung].SetActive(true);
     }
-    
-    
 }
