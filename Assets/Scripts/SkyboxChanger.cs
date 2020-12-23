@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class SkyboxChanger : MonoBehaviour
 {
+    ///// In dieser Klasse befinden sich alle methoden die fuer das Abspielen und Pausieren der Musik notwendig sind /////
+    /// 
+
     public Material[] skyBox;
     public GameObject[] surrounding;
 
@@ -23,6 +26,7 @@ public class SkyboxChanger : MonoBehaviour
 
 
 
+    // Waehlt die naechste Skybox aus
     public void SkyboxUp()
     {
         if (currentSkybox == skyBox.Length)
@@ -34,6 +38,7 @@ public class SkyboxChanger : MonoBehaviour
         RenderSettings.skybox = skyBox[currentSkybox];
     }
 
+    // Waehlt die vorherige Skybox aus
     public void SkyboxDown()
     {
         if (currentSkybox == 0)
@@ -44,6 +49,7 @@ public class SkyboxChanger : MonoBehaviour
         RenderSettings.skybox = skyBox[currentSkybox];
     }
 
+    // Waehlt die naechsthoehere Umgebung aus
     public void UmgebungUp()
     {
         if (currentUmgebung == surrounding.Length)
