@@ -6,6 +6,11 @@ using UnityEngine.UIElements;
 
 public class ButtonPlacement : MonoBehaviour
 {
+    ///// ButtonPlacement war der erste Versuch die Buttons erst nach Bauen des Tisches an richtige Positionen zu platzieren /////
+    //// weil sonst die Buttons auch neben dem Tisch platziert werden koennten
+    //// 
+
+
     // public PositionController _positionController;
     // public List<GameObject> _buttonAnchors;
 

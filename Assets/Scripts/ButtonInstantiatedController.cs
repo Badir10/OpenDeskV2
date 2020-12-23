@@ -7,7 +7,10 @@ using UnityEngine.PlayerLoop;
 
 public class ButtonInstantiatedController : MonoBehaviour
 {
-    // Hier befinden sich alle Eventhandler die bei der Aktivierung der Buttons verwendet werden
+    ///// Hier befinden sich alle Eventhandler die bei der Aktivierung der Buttons verwendet werden /////
+    /// 
+    
+    
     private bool pauseBool;
     private float timePassed = 0;
     private float maxTime = 0.7f;
@@ -18,7 +21,8 @@ public class ButtonInstantiatedController : MonoBehaviour
 
     private MusicPlayer musicPlayer;
 
-    public AudioSource buttonSound;
+    [SerializeField]
+    private AudioSource buttonSound;
 
     [SerializeField]
     private Sprite iconDef;
@@ -26,11 +30,12 @@ public class ButtonInstantiatedController : MonoBehaviour
     private Sprite iconAlt;
     [SerializeField]
     private GameObject toInfluence;
-
-    public 
+    
 
     void Awake()
     {
+        // nimmt sich zu Beginn dieser Klasse alle fuer den Code notwendigen Komponenten waehrend das Spiel laeuft 
+        
         skyboxChanger = GameObject.Find("Skybox").GetComponent<SkyboxChanger>();
         rend = gameObject.GetComponent<Renderer>();
         musicPlayer = GameObject.Find("Audio").GetComponent<MusicPlayer>();
@@ -43,9 +48,12 @@ public class ButtonInstantiatedController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // pause boolean der eine gewisse Zeit verstreichen laesst und dann an den bool weitergibt
         if (pauseBool)
         {
             timePassed = timePassed + Time.deltaTime;
+            
+            // wenn verstrichene Zeit größer oder gleich der maximalen vorgegebenen Zeit ist
             if (timePassed >= maxTime)
             {
                 timePassed = 0;
@@ -54,6 +62,7 @@ public class ButtonInstantiatedController : MonoBehaviour
         }
     }
 
+    // die beiden Methoden aendern die Skybox nachdem eine Zeit von pauseBool verstrichen ist
     public void SkyboxUp()
     {
         if (!pauseBool)
@@ -62,7 +71,6 @@ public class ButtonInstantiatedController : MonoBehaviour
             skyboxChanger.SkyboxUp();
         }
     }
-    
     public void SkyboxDown()
     {
         if (!pauseBool)
@@ -72,6 +80,7 @@ public class ButtonInstantiatedController : MonoBehaviour
         }
     }
     
+    // die Methode aendert die Prefabs in der Umgebung nachdem eine Zeit von pauseBool verstrichen ist
     public void UmgebungUp()
     {
         if (!pauseBool)
@@ -81,6 +90,7 @@ public class ButtonInstantiatedController : MonoBehaviour
         }
     }
 
+    // die drei Methoden aendern Musik und pausieren und spielen sie nachdem eine Zeit von pauseBool verstrichen ist
     public void MusicUp()
     {
         if (!pauseBool)
@@ -89,7 +99,6 @@ public class ButtonInstantiatedController : MonoBehaviour
             musicPlayer.MusicUp();
         }
     }
-
     public void MusicDown()
     {
         if (!pauseBool)
@@ -98,7 +107,6 @@ public class ButtonInstantiatedController : MonoBehaviour
             musicPlayer.MusicDown();
         }
     }
-
     public void MusicPlayPause()
     {
         if (!pauseBool)
@@ -108,6 +116,8 @@ public class ButtonInstantiatedController : MonoBehaviour
         }
     }
 
+    
+    // lerpt die Farbe des Buttons
     public void ColorLerpOn()
     {
         
@@ -115,13 +125,13 @@ public class ButtonInstantiatedController : MonoBehaviour
         
     }
 
+    // spielt den Button-klick ab
     public void ButtonSound()
     {
-        
-            buttonSound.Play();
-        
+        buttonSound.Play();
     }
 
+    
     public void Paint()
     {
             
@@ -141,7 +151,6 @@ public class ButtonInstantiatedController : MonoBehaviour
         SpriteRenderer rend = toInfluence.transform.Find("ButtonIcon").GetComponent<SpriteRenderer>();
         rend.sprite = iconDef;
         PaintTool.Instance.DeleteAllPaint();
-        
     }
 
 }

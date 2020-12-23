@@ -5,6 +5,11 @@ using UnityEngine;
 using OculusSampleFramework;
 public class LocoController : MonoBehaviour
 { 
+    
+    ///// diese Klasse sollte einen Teleporter in das Projekt einfuehren. Es hat mit dem Controller funktioniert, aber nicht mit Handtracking /////
+    /// deshalb wurde es in der letzten Version nicht verwendet
+    ///
+    
     public VRTeleporter teleporter;
     public OVRHand hand;
 
