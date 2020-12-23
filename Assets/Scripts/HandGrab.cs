@@ -5,23 +5,30 @@ using OculusSampleFramework;
 
 public class HandGrab : OVRGrabber
 {
+    ///// diese Klasse erbt von dem Oculus OVRGrabber und aendert ihn so, dass er mit Handtracking funktionieren kann /////
+    /// 
+    
     private OVRHand hand;
-    public float pinchThreshold = 0.7f;
+    
+    [SerializeField]
+    private float pinchThreshold = 0.7f;
     
     protected override void Start()
     {
+        // Fuehrt die Start-Methode des OVRGrabber aus und nimmt sich zusaetzlich das Handtracking-Prefab
         base.Start();
         hand = GetComponent<OVRHand>();
     }
 
-
-    // Update is called once per frame
     public override void Update()
     {
+        // Fuehrt die Update-Methode des OVRGrabber  und zusaetzlich die neue Grab-Methode fuer das Handtracking aus
         base.Update();
         CheckIndexPinch();
     }
     
+    
+    // prueft ob der Zeigefinger den Daumen beruehrt und grabt dann
     void CheckIndexPinch()
     {
         float pinchStrength = hand.GetFingerPinchStrength(OVRHand.HandFinger.Index);
