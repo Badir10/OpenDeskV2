@@ -164,16 +164,25 @@ public class ButtonInstantiatedController : MonoBehaviour
 
     public void NextTest()
     {
-        SkyboxUp();
-        UmgebungUp();
-        MusicUp();
+        if (!pauseBool)
+        {
+            pauseBool = true;
+            skyboxChanger.SkyboxUp();
+            skyboxChanger.UmgebungUp();
+            musicPlayer.MusicUp();
+        }
+        
     }
 
     public void PrevTest()
     {
-        SkyboxDown();
-        UmgebungDown();
-        MusicDown();
+        if (!pauseBool)
+        {
+            pauseBool = true;
+            skyboxChanger.SkyboxDown();
+            skyboxChanger.UmgebungDown();
+            musicPlayer.MusicDown();
+        }
     }
 
 }
