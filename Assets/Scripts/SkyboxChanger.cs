@@ -62,4 +62,17 @@ public class SkyboxChanger : MonoBehaviour
         surrounding[oldScene].SetActive(false);
         surrounding[currentUmgebung].SetActive(true);
     }
+    
+    public void UmgebungDown()
+    {
+        int oldScene = currentUmgebung;
+        currentUmgebung--;
+
+        if (currentUmgebung < 0)
+        {
+            currentUmgebung = surrounding.Length-1;
+        }
+        surrounding[oldScene].SetActive(false);
+        surrounding[currentUmgebung].SetActive(true);
+    }
 }

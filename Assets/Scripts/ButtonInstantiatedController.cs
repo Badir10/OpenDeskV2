@@ -90,6 +90,15 @@ public class ButtonInstantiatedController : MonoBehaviour
         }
     }
 
+    public void UmgebungDown()
+    {
+        if (!pauseBool)
+        {
+            skyboxChanger.UmgebungDown();
+            pauseBool = true;
+        }
+    }
+
     // die drei Methoden aendern Musik und pausieren und spielen sie nachdem eine Zeit von pauseBool verstrichen ist
     public void MusicUp()
     {
@@ -151,6 +160,20 @@ public class ButtonInstantiatedController : MonoBehaviour
         SpriteRenderer rend = toInfluence.transform.Find("ButtonIcon").GetComponent<SpriteRenderer>();
         rend.sprite = iconDef;
         PaintTool.Instance.DeleteAllPaint();
+    }
+
+    public void NextTest()
+    {
+        SkyboxUp();
+        UmgebungUp();
+        MusicUp();
+    }
+
+    public void PrevTest()
+    {
+        SkyboxDown();
+        UmgebungDown();
+        MusicDown();
     }
 
 }
